@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Hexo + GitHub 搭建个人博客</title>
+      <link href="/2021/08/01/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+      <url>/2021/08/01/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Hexo-GitHub-搭建个人博客">Hexo + GitHub 搭建个人博客</h2><ul><li><p>安装<code>nodeJs</code>，版本号选择为 <code>v12.14.0</code>，最好选择免安装版本<code>node-v12.14.0-win-x64.zip</code>解压后即可使用</p><p>NodeJs下载地址：<a href="https://nodejs.org/dist/v12.14.0/">https://nodejs.org/dist/v12.14.0/</a>  (注意：免安装版本需要自行添加环境变量)</p></li><li><p>配置<code>npm</code> （<code>nodeJs</code>默认自带<code>npm</code>命令，此步骤可选择，参考链接：<a href="https://www.cnblogs.com/dalyday/p/10664287.html%EF%BC%89">https://www.cnblogs.com/dalyday/p/10664287.html）</a></p><ul><li><p>将<code>npm</code>的默认下载目录从<code>c</code>盘移动到<code>D</code>盘</p><pre><code class="language-shell">npm config set prefix "D:\tool\nodeJs\node_global"npm config set cache "D:\tool\nodeJs\node_cache"</code></pre></li><li><p>配置镜像源，提升速度</p><pre><code class="language-shell">npm config set registry=http://registry.npm.taobao.org</code></pre></li><li><p>查看配置是否成功</p><pre><code class="language-shell">npm config list=====================如下都是回显信息，也可以直接修改C:\Users\xy\.npmrc文件配置===============; cli configsmetrics-registry = "https://registry.npm.taobao.org/"scope = ""user-agent = "npm/6.13.4 node/v12.14.0 win32 x64"; userconfig C:\Users\xy\.npmrccache = "D:\\tool\\nodeJs\\node_cache"prefix = "D:\\tool\\nodeJs\\node_global"registry = "https://registry.npm.taobao.org/"; node bin location = D:\tool\nodeJs\node.exe; cwd = D:\tool; HOME = C:\Users\xy; "npm config ls -l" to show all defaults.</code></pre></li><li><p>由于<code>nodeJs</code>自带的<code>npm</code>不是最新的版本，可以自行升级<code>npm</code>模块</p><pre><code class="language-shell">npm install npm -gnpm -v # 查看npm版本号</code></pre></li><li><p>因为之前修改了<code>npm</code>默认的目录，所以在环境变量<code>PATH</code>中添加<code>D:\tool\nodeJs\node_global</code></p></li></ul></li><li><p>安装 <code>hexo</code></p><pre><code class="language-shell">npm install -g hexo # nodeJs默认自带npm命令</code></pre></li><li><p>选择一个空文件夹作为Blog的根目录，执行初始化，可以自定义下载其他主题</p><pre><code class="language-shell">hexo initgit clone git@github.com:Haojen/hexo-theme-Claudia.git themes/claudia # 下载claudia主题</code></pre></li><li><p>设置<code>NPM</code>淘宝源，安装 <code>CNPM</code></p><pre><code class="language-shell">npm i cnpm -g --registry=http://registry.npm.taobao.org</code></pre></li><li><p>进入<code>Blog</code>根路径安装包</p><pre><code class="language-shell">#必要cnpm install hexo-renderer-pug --savecnpm install hexo-renderer-sass --save cnpm install hexo-generator-search --save #选择性安装# 如果需要添加订阅功能cnpm install hexo-generator-feed --save # 流程图功能cnpm install hexo-filter-flowchart --save   # Emojicnpm install hexo-filter-github-emojis --save  # 搜索功能cnpm install hexo-generator-search --save   # 数学公式cnpm install hexo-renderer-mathjax --save</code></pre></li><li><p>其他推荐安装包 (可选步骤)</p><ul><li>Hexo中插入<code>mermaid diagrams</code> (<a href="https://blog.csdn.net/Olivia_Vang/article/details/92987859">https://blog.csdn.net/Olivia_Vang/article/details/92987859</a>)</li><li>Hexo中插入本地图片 (<a href="https://blog.csdn.net/xjm850552586/article/details/84101345">https://blog.csdn.net/xjm850552586/article/details/84101345</a>)</li></ul></li><li><p>配置根目录下的 <code>GitHub</code>项目路径</p><pre><code class="language-shell">deploy:  type: git  repository: git@github.com:xy007man/xy007man.github.io.git  branch: master</code></pre></li></ul><hr><h2 id="参考链接">参考链接</h2><p><code>Hexo + GitHub</code> 搭建个人博客：<a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html</a></p><p><code>Claudia</code> 主题介绍：<a href="https://github.com/Haojen/hexo-theme-Claudia/blob/master/README-CN.md">https://github.com/Haojen/hexo-theme-Claudia/blob/master/README-CN.md</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 其他 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 随笔 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>内核同步机制：mutex锁</title>
+      <link href="/2021/07/24/%E5%86%85%E6%A0%B8%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6_%E9%94%81/"/>
+      <url>/2021/07/24/%E5%86%85%E6%A0%B8%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6_%E9%94%81/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Mutex锁的使用">Mutex锁的使用</h2><table><thead><tr><th>函数定义</th><th>功能说明</th></tr></thead><tbody><tr><td>mutex_lock(struct mutex *lock)</td><td>加锁，如果不可用，则睡眠（UNINTERRUPTIBLE）</td></tr><tr><td>mutex_lock_interruptible(struct mutex *lock);</td><td>加锁，如果不可用，则睡眠（TASK_INTERRUPTIBLE）</td></tr><tr><td>mutex_unlock(struct mutex *lock)</td><td>解锁</td></tr><tr><td>mutex_trylock(struct mutex *lock)</td><td>试图获取指定的 mutex，或得到返回1，否则返回 0</td></tr><tr><td>mutex_is_locked(struct mutex *lock)</td><td>如果 mutex 被占用返回1，否则返回 0</td></tr></tbody></table><hr><h2 id="Mutex锁和其他锁的区别">Mutex锁和其他锁的区别</h2><ul><li><code>mutex</code> 一种睡眠锁，其行为和 count 为 1 的信号量类似，但是不同于信号量，<code>mutex</code>需要谁拿的锁谁来释放锁</li><li>不同于自旋锁，mutex临界区允许睡眠</li><li>不同于自旋锁，mutex在拿锁时若锁被别人持有，会根据锁的持有者是否正在运行来决定是乐观自旋或是睡眠等待</li></ul><hr><h2 id="Mutex锁的实现">Mutex锁的实现</h2><ul><li><a href="https://blog.csdn.net/zhoutaopower/article/details/86627438">https://blog.csdn.net/zhoutaopower/article/details/86627438</a></li><li><a href="https://zhuanlan.zhihu.com/p/390107537">https://zhuanlan.zhihu.com/p/390107537</a></li></ul><p>​以上两篇文章介绍的比较好，可以参考看一下，总结一下<code>mutex</code>的特点</p><ul><li><code>mutex</code> 由于性能原因并不是绝对公平调度的，允许偷锁的情况，但是为了相对公平引入了<code>handoff</code>机制，让被偷锁的进程在下次一定可以获取锁。</li><li><code>mutex</code> 锁有自旋锁和信号量的特点，即当持有锁的进程处于执行状态时，等待锁的进程会关闭抢占进行自旋；若持有锁的进程处于睡眠状态时，等待锁的进程也会进行休眠，和信号量的表现一致。</li><li>信号量和<code>mutex</code>锁优选<code>mutex</code>。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> mutex </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>内核同步机制：信号量</title>
+      <link href="/2021/07/17/%E5%86%85%E6%A0%B8%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6_%E4%BF%A1%E5%8F%B7%E9%87%8F/"/>
+      <url>/2021/07/17/%E5%86%85%E6%A0%B8%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6_%E4%BF%A1%E5%8F%B7%E9%87%8F/</url>
+      
+        <content type="html"><![CDATA[<h2 id="信号量的使用">信号量的使用</h2><pre><code class="language-c">struct semaphore {raw_spinlock_tlock;unsigned intcount;struct list_headwait_list;};void sema_init(struct semaphore *sem, int val);void down(struct semaphore *sem);int down_interruptible(struct semaphore *sem); // 在睡眠期间可以被信号打断返回void up(struct semaphore *sem)</code></pre><hr><h2 id="源码分析">源码分析</h2><pre><code class="language-c">void down(struct semaphore *sem){unsigned long flags;raw_spin_lock_irqsave(&amp;sem-&gt;lock, flags);if (likely(sem-&gt;count &gt; 0)) // 对应sema_init中的第二个参数val，如果当前大于0，当前进程可以进入临界区执行sem-&gt;count--;else__down(sem); // 否则将将当前进程阻塞住raw_spin_unlock_irqrestore(&amp;sem-&gt;lock, flags);}// down 最终会调用到 __down_commonstatic inline int __sched __down_common(struct semaphore *sem, long state,long timeout){struct semaphore_waiter waiter;list_add_tail(&amp;waiter.list, &amp;sem-&gt;wait_list); // 将当前进程加入等待链表中waiter.task = current; // current 代表当前进程的结构体waiter.up = false;for (;;) {if (signal_pending_state(state, current)) // 如果当前进程有信号处理，则返回-EINTRgoto interrupted;if (unlikely(timeout &lt;= 0))goto timed_out;__set_current_state(state); // 设置当前进程状态(TASK_INTERRUPTIBLE/TASK_UNINTERRUPTIBLE)raw_spin_unlock_irq(&amp;sem-&gt;lock);timeout = schedule_timeout(timeout); // 主动退出调度，进入此函数后进程已经成功阻塞住了，等待被唤醒raw_spin_lock_irq(&amp;sem-&gt;lock); if (waiter.up)return 0;} timed_out:list_del(&amp;waiter.list);return -ETIME; interrupted:list_del(&amp;waiter.list);return -EINTR;}void up(struct semaphore *sem){unsigned long flags;raw_spin_lock_irqsave(&amp;sem-&gt;lock, flags);if (likely(list_empty(&amp;sem-&gt;wait_list))) // 当前没有任何进程阻塞在该信号量上sem-&gt;count++;else__up(sem);raw_spin_unlock_irqrestore(&amp;sem-&gt;lock, flags);}static noinline void __sched __up(struct semaphore *sem){struct semaphore_waiter *waiter = list_first_entry(&amp;sem-&gt;wait_list,struct semaphore_waiter, list); // 获取第一个阻塞在此信号量上的进程list_del(&amp;waiter-&gt;list);waiter-&gt;up = true;wake_up_process(waiter-&gt;task); // 唤醒进程}</code></pre><h2 id="总结">总结</h2><p>​可以看到Linux内核中信号量的使用和实现都是十分简洁的。可以看出内核中用一条链表实现了阻塞在信号量上多个进程的公平调度，不过从内核中的实现来看貌似这并不是最优的实现，因为临界区代码往往都比较短小，但是如果进程获取不到信号量就会直接睡眠下去，这可能会造成进程频繁的睡眠唤醒。下一节会分析一下内核中 <code>mutex</code> 的实现。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 信号量 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>编程银弹</title>
+      <link href="/2021/07/10/%E7%BC%96%E7%A8%8B%E9%93%B6%E5%BC%B9/"/>
+      <url>/2021/07/10/%E7%BC%96%E7%A8%8B%E9%93%B6%E5%BC%B9/</url>
+      
+        <content type="html"><![CDATA[<h1>小白</h1><p>记得在大一刚接触编程时，经常陷入语法的陷阱，把大部分精力放在了学习语法上，经常因为知道了语言上的一些奇技淫巧而沾沾自喜。大一实验课设计一个的图书管理系统，代码删删改改，磕磕碰碰最后勉强跑通，感觉费了好多脑细胞。时常听到编程语言只是工具，好的代码是给人看的，好的代码需要好的设计。之后学习了软件工程、接触了23种设计模式，但是仍然懵懵懂懂，经常在想编程到底有没有银弹。</p><span id="more"></span><hr><h1>工作</h1><p>工作之后，部门潇潇洒洒规定了百八十条的编程规范让新员工记住。印象比较深的就是一个函数不要超过50行。其实在刚开始我也没觉的有啥坏处，按照规定来就行了。之后就出现了各种牛鬼蛇神的代码，许多代码明明放在一个函数逻辑比较通顺，为了符合编程规范必须拆分成2个甚至3个函数。</p><hr><h1>思考</h1><p>一个函数超过50行就是烂代码吗？显然不是这样。我也写了几年代码，自己有一点感触。当你要设计一个类或者函数时，第一要<strong>先明确</strong>函数的功能，明确好入参和出参**。新手时常陷入其中细节的逻辑中，缺啥参数返回头在去增加，修改来修改去，最终成型的代码，参数可能有5、6个，临时变量7、8个，函数行数膨胀到2~3百行。第二在写具体逻辑的时候，<strong>如果发现你的脑细胞不够用的，一定要意识到你应该</strong>再封装一个函数了**。你自己写的代码你应该最清楚业务逻辑，但是你自己写的时候都费劲，如果这样的业务代码交给别人去review或者维护那将是一个灾难。一般一个函数代码行数不应该超过一屏半，最好不要超过150行，但是代码行不应该做为判断代码好坏的绝对条件。</p><p>最后回到主题编程有银弹吗？我认为是没有的，不能靠条条框框的编程规范去让程序员写出更好的代码。靠编程规范约束的开发人员不会是一个好的开发人员，他已经被这些条条框框约束住了，缺失了创造力。大家最不愿意做的是啥？就是写设计文档，说白了就是不愿意思考，如果模块的接口定义好了，其实剩下的就是搬砖了。不否定编程规范对新手的积极作用，但是作为一位老鸟应该明白其中的门道。希望有一天我也能像卖油翁那样说一句：“无他，唯手熟尔”。</p><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> 编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 随笔 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>HTTPS基本原理简析</title>
+      <link href="/2021/07/03/HTTPS/"/>
+      <url>/2021/07/03/HTTPS/</url>
+      
+        <content type="html"><![CDATA[<h2 id="基础">基础</h2><ul><li><p>对称加密算法</p><p>对称加密算法的特点是加密密钥和解密密钥是同一把密钥K，且加解密速度快，典型的对称加密算法有DES、AES等</p><p><img src="/2021/07/03/HTTPS/548912-20160303105320549-487055351.png" alt="对称加密算法加密流程和解密流程"></p></li><li><p>非对称加密算法</p><p>​非对称加密算法的特点是加密密钥K1和解密密钥K2是不一样的，他们是一对可互为加解密的密钥，一个可以公开，叫公钥；一个自己保留，不能让其他人知道，叫私钥。这样就能比较好的解决信息传递的安全性，相对来说加解密速度较慢，典型的非对称加密算法有RSA、DSA等。</p><p><img src="/2021/07/03/HTTPS/548912-20160303111011190-1826727713.png" alt="非对称加密算法加密流程和解密流程"></p></li></ul><hr><h2 id="非对称加密的两大应用">非对称加密的两大应用</h2><ul><li><p>加密通信：公钥加密，私钥解密</p></li><li><p>数字签名：私钥加密，公钥解密</p><ul><li><p>发送方（甲方）签名过程：使用单向哈希算法对明文生成摘要，用私钥将摘要加密</p><p><img src="/2021/07/03/HTTPS/548912-20160303111013487-1921207550.png" alt="摘要算法及数字签名过程"></p></li><li><p>接收方（乙方）校验过程：接受方把接收到的发送方的明文用单向哈希函数取得摘要值与发送方的公钥解密发送方的数字签名而得到的摘要值进行比较，如果一样说明信息完整，未受篡改，如果不一样说明受到篡改。</p><p><img src="/2021/07/03/HTTPS/548912-20160303111014549-473199446.png" alt="检验数据完整性过程"></p></li></ul></li></ul><hr><h2 id="HTTPS的工作方式">HTTPS的工作方式</h2><p>​<code>HTTPS</code> 实际采用的是混合加密的方式，即通过<strong>非对称加密的方式传递对称加密的密钥，对称加密的方式传递主体数据</strong>，通过<strong>检查证书是不是由可以信赖的机构颁发的，确认证书有效和此证书是此网站的，即检查公钥的合法性</strong>。</p><p><img src="/2021/07/03/HTTPS/548912-20160303111014549-47319944.png" alt="HTTPS工作方式"></p><hr><h2 id="参考链接">参考链接</h2><p><a href="https://www.cnblogs.com/gordon0918/p/5237717.html">https://www.cnblogs.com/gordon0918/p/5237717.html</a></p><p><a href="https://www.cnblogs.com/wang-yaz/p/10604403.html">https://www.cnblogs.com/wang-yaz/p/10604403.html</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> https </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>字节序/比特序</title>
+      <link href="/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/"/>
+      <url>/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/</url>
+      
+        <content type="html"><![CDATA[<h2 id="大端序-小端序">大端序/小端序</h2><p>​字节序即字节的存储顺序，如果数据都是单字节的，那怎么存储无所谓了，但是对于多字节数据，比如int，double等，就要考虑存储的顺序了。字节序是硬件层面的东西，通常只和你使用的处理器架构有关，而和编程语言无关。字节序分为大端序和小端序。</p><ul><li><p>**大端序：<strong>将高序字节存储在起始地址</strong>，一个占有4个字节类型的数据0x00112233在内存中如下分布：</p><p><img src="/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/19d498caac5304a2faedd537c5544d87.png" alt="大端模式"></p></li><li><p><strong>小端序</strong>：<strong>将低序字节存储在起始地址</strong>，数据0x00112233在内存中如下分布：</p><p><img src="/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/664881c6233ab0ed63cddc96db08afbc.png" alt="小端模式"></p><hr><h2 id="比特序-位域">比特序/位域</h2><p>​位域的写入顺序和当前系统字节序有关：先定义的位域在大端环境从最高bit位(<code>MSB</code>)开始分配。如果为小端环境则先定义的位域从最低bit位（<code>LSB</code>）开始分配。(CPU操作内存还是以字节为单位的)</p><pre><code class="language-c">struct bitfield{    uint8_t a:1;    uint8_t b:2;    uint8_t c:3;    uint8_t d:2;}bf;bf.a = 1;bf.b = 2;bf.c = 3;bf.d = 3;</code></pre></li><li><p>大端系统：<code>struct bitfield bf</code> 在内存中如下分布：</p><p><img src="/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/5dad1350789a2397a4830e8c4d4d322a.png" alt="MSB"></p></li><li><p>小端系统：<code>struct bitfield bf</code> 在内存中如下分布：</p></li></ul><p><img src="/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/4c5e9f8058a75efa50022165f273e476.png" alt="LSB"></p><p>​比特的发送、接收顺序对CPU、软件都是不可见的，（对诸如PHY的serdes(串行器和解串器)以及网卡写总线的硬件设计是非常重要的）因为我们的网卡会给我们处理这种转换，在发送的时候按照小端序发送比特位，<strong>在接收的时候网卡会把接收到的比特序转换成主机的比特序</strong>，下面是一个小端机器发送一个int整型给一个大端机器的示意图：</p><p>​<img src="/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/20171222210949014" alt="bit网络发送"></p><p>​因为不同的平台的比特序是不同的，但是我们定义的位域需要根据平台的大小端进行转换，以iphdr为例：</p><pre><code class="language-c">struct iphdr {#if defined(__LITTLE_ENDIAN_BITFIELD)        __u8    ihl:4,                version:4;#elif defined (__BIG_ENDIAN_BITFIELD)        __u8    version:4,                ihl:4;#else#error  "Please fix &lt;asm/byteorder.h&gt;"#endif        __u8    tos;        __u16   tot_len;        __u16   id;        __u16   frag_off;        __u8    ttl;        __u8    protocol;        __u16   check;        __u32   saddr;        __u32   daddr;        /*The options start here. */};</code></pre><hr><h2 id="网络序-主机序">网络序/主机序</h2><ul><li>网络序：采用大端的排序方式</li><li>主机序：不同的CPU有不同的字节序类型这些字节序是指整数在内存中保存的顺序，CPU上运行不同的操作系统，字节序也是不同的</li></ul><table><thead><tr><th>处理器</th><th>操作系统</th><th>字节排序</th></tr></thead><tbody><tr><td>Alpha</td><td>全部</td><td>Little endian</td></tr><tr><td>HP-PA</td><td>NT</td><td>Little endian</td></tr><tr><td>HP-PA</td><td>UNIX</td><td>Big endian</td></tr><tr><td>Intelx86</td><td>全部</td><td>Little endian</td></tr><tr><td>Motorola680x</td><td>全部</td><td>Big endian</td></tr><tr><td>MIPS</td><td>NT</td><td>Little endian</td></tr><tr><td>MIPS</td><td>UNIX</td><td>Big endian</td></tr><tr><td>PowerPC</td><td>NT</td><td>Little endian</td></tr><tr><td>PowerPC</td><td>非NT</td><td>Big endian</td></tr><tr><td>RS/6000</td><td>UNIX</td><td>Big endian</td></tr><tr><td>SPARC</td><td>UNIX</td><td>Big endian</td></tr><tr><td>IXP1200 ARM核心</td><td>全部</td><td>Little endian</td></tr></tbody></table><hr><h2 id="参考链接">参考链接</h2><p><a href="https://blog.csdn.net/firefly_2002/article/details/8034046">https://blog.csdn.net/firefly_2002/article/details/8034046</a></p><p><a href="https://blog.csdn.net/qq_34907757/article/details/117670413">https://blog.csdn.net/qq_34907757/article/details/117670413</a></p><p><a href="https://blog.csdn.net/godleading/article/details/78876639">https://blog.csdn.net/godleading/article/details/78876639</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 字节序 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Linux字符设备驱动与杂项设备驱动</title>
+      <link href="/2021/06/27/%E5%AD%97%E7%AC%A6%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8_%E6%9D%82%E9%A1%B9%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/"/>
+      <url>/2021/06/27/%E5%AD%97%E7%AC%A6%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8_%E6%9D%82%E9%A1%B9%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/</url>
+      
+        <content type="html"><![CDATA[<h2 id="字符设备驱动">字符设备驱动</h2><pre class="mermaid">graph LRA[字符设备驱动框架]--&gt;B1[驱动初始化]B1[驱动初始化]--&gt;C1[分配设备号]C1[分配设备号]--&gt;D1[静态分配设备号]D1[静态分配设备号]--&gt;E(register_chrdev_region)C1[分配设备号]--&gt;D2[动态分配设备号]D2[动态分配设备号]--&gt;F(alloc_chrdev_region)C1[分配设备号]--&gt;D3[操作设备号dev_t]D3[操作设备号dev_t]--&gt;Z1(MAJOR提取主设备号)D3[操作设备号dev_t]--&gt;Z2(MINOR提取主设备号)D3[操作设备号dev_t]--&gt;Z3(MKDRV将主次设备号合成dev_t)D3[操作设备号dev_t]--&gt;Z4(cat /proc/device/xxx查看设备号)B1[驱动初始化]--&gt;C2[初始化cdev]C2[初始化cdev]--&gt;G(cdev_init)B1[驱动初始化]--&gt;C3[注册cdev]C3[注册cdev]--&gt;H(cdev_add)A[字符设备驱动框架]--&gt;B2[构建file_operations]B2[构建file_operations]--&gt;J1(open)B2[构建file_operations]--&gt;J2(read)J2(read)--&gt;K(copy_to_user)B2[构建file_operations]--&gt;J3(write)J3(write)--&gt;L(copy_from_user)B2[构建file_operations]--&gt;J4(ioctl)J4(ioctl)--&gt;M(copy_from_user/copy_to_user)B2[构建file_operations]--&gt;J5(close)A[字符设备驱动框架]--&gt;B3[生成设备节点]B3[生成设备节点]--&gt;N1[手动生成设备节点]N1[手动生成设备节点]--&gt;O(mknod命令)B3[生成设备节点]--&gt;N2[自动生成设备节点]N2[自动生成设备节点]--&gt;M1(class_create:在/sys/class/目录下创建一个class)N2[自动生成设备节点]--&gt;M2(device_create:在/dev/目录下创建一个device)A[字符设备驱动框架]--&gt;B4[驱动卸载]B4[驱动卸载]--&gt;P1[释放设备号]P1[释放设备号]--&gt;Q(unregister_chrdev_region)B4[驱动卸载]--&gt;P2[卸载cdev]P2[卸载cdev]--&gt;R(cdev_del)B4[驱动卸载]--&gt;P3[卸载设备]P3[卸载设备]--&gt;T(device_destory)</pre><hr><h2 id="杂项设备驱动">杂项设备驱动</h2><pre class="mermaid">graph LRA[杂项设备驱动框架]--&gt;B1[注册杂项设备]B1[注册杂项设备]--&gt;C(misc_register)A[杂项设备驱动框架]--&gt;B2[构建杂项设备结构体]B2[构建杂项设备结构体]--&gt;D(struct miscdevice:对次设备号/设备节点名称/file_operations初始化)A[杂项设备驱动框架]--&gt;B3[构建file_operations]B3[构建file_operations]--&gt;J1(open)B3[构建file_operations]--&gt;J2(read)J2(read)--&gt;K(copy_to_user)B3[构建file_operations]--&gt;J3(write)J3(write)--&gt;L(copy_from_user)B3[构建file_operations]--&gt;J4(ioctl)J4(ioctl)--&gt;M(copy_from_user/copy_to_user)B3[构建file_operations]--&gt;J5(close)A[杂项设备驱动框架]--&gt;B4[卸载杂项设备]B4[卸载杂项设备]--&gt;E(misc_deregister)</pre><hr><h2 id="应用层打开节点">应用层打开节点</h2><pre class="mermaid">graph LRA[应用程序]--&gt;B1[open]B1--&gt;C[file_operations]A[应用程序]--&gt;B2[read]B2--&gt;C[file_operations]A[应用程序]--&gt;B3[write]B3--&gt;C[file_operations]A[应用程序]--&gt;B4[ioctl]B4--&gt;C[file_operations]A[应用程序]--&gt;B5[close]B5--&gt;C[file_operations]C--&gt;D1[内核注册的open]C--&gt;D2[内核注册的read]C--&gt;D3[内核注册的write]C--&gt;D4[内核注册的ioctl]C--&gt;D5[内核注册的close]D1--&gt;E[操作硬件]D2--&gt;E[操作硬件]D3--&gt;E[操作硬件]D4--&gt;E[操作硬件]D5--&gt;E[操作硬件]</pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 驱动 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>人机对弈</title>
+      <link href="/2021/06/26/%E4%BA%BA%E6%9C%BA%E5%AF%B9%E5%BC%88/"/>
+      <url>/2021/06/26/%E4%BA%BA%E6%9C%BA%E5%AF%B9%E5%BC%88/</url>
+      
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2><p>​小时候在FC上玩过象棋游戏，印象最深的就是那个老头，每次走棋贼慢同时棋力也特高。一直想了解下人机对弈的算法，看了几篇文章后，发现基本的套路都是一样的，自己写了一个小时候玩的<code>两口吃一口</code>的小游戏。</p><img src="/2021/06/26/%E4%BA%BA%E6%9C%BA%E5%AF%B9%E5%BC%88/FC象棋.jpg" alt="FC象棋" style="zoom:50%;"><hr><h2 id="棋类AI基本步骤-以下都是基于两口吃一口这个小游戏">棋类AI基本步骤(以下都是基于<code>两口吃一口</code>这个小游戏)</h2><ul><li><p><strong>局面生成</strong>：棋子种类、开局位置</p><pre><code class="language-c++">// 5x5 棋盘，黑方和白方初始时都有5颗棋子/*  0 1 2 3 4 ┌─────────┐0│○─○─○─○─○│1│├─┼─┼─┼─┤│2│├─┼─┼─┼─┤│3│├─┼─┼─┼─┤│4│●─●─●─●─●│ └─────────┘ */std::string GenBoard(int row, int col, int colNum, int rowNum, std::map&lt;std::pair&lt;int, int&gt;, int&gt; board){std::string str;auto it = board.find(std::make_pair(row, col));if (it != board.end()) {if (it-&gt;second == WHITE) {return "○";}if (it-&gt;second == BLACK) {return "●";}}if (row == 0 &amp;&amp; col == 0) {str = "┌";}else if (row == 0 &amp;&amp; col == colNum - 1) {str = "┐";}else if (row == rowNum - 1 &amp;&amp; col == 0) {str = "└";}else if (row == rowNum - 1 &amp;&amp; col == colNum - 1) {str = "┘";}else if (row == 0) {str = "┬";}else if (col == colNum - 1) {str = "┤";}else if (col == 0) {str = "├";}else if (row == rowNum - 1) {str = "┴";}else {str = "┼";}return str;}// 棋盘绘制void DrawBoard(){std::string posCol;std::string topBorderLine;std::string bottomBorderLine;posCol += "  ";for (int i = 0; i &lt; g_colNum; i++) {posCol += std::to_string(i) + " ";}GenBorderLine(topBorderLine, bottomBorderLine, g_colNum);std::cout &lt;&lt; posCol &lt;&lt; std::endl;std::cout &lt;&lt; topBorderLine &lt;&lt; std::endl;for (int rowIdx = 0; rowIdx &lt; g_rowNum; rowIdx++) {std::cout &lt;&lt; std::to_string(rowIdx) &lt;&lt; "│";for (int colIdx = 0; colIdx &lt; g_colNum; colIdx++) {std::cout &lt;&lt; GenBoard(rowIdx, colIdx, g_rowNum, g_colNum, g_board);if (colIdx != g_colNum - 1) {std::cout &lt;&lt; "─";}}std::cout &lt;&lt; "│" &lt;&lt; std::endl;}std::cout &lt;&lt; bottomBorderLine &lt;&lt; std::endl;}</code></pre></li><li><p><strong>走法生成</strong>：走棋规则、吃子规则、胜利规则</p><pre><code class="language-c++">// 上下左右不超出棋盘并且目标位置没有棋子void GenMoveWays(int player, std::vector&lt;std::tuple&lt;int, int, int, int&gt;&gt;&amp; ways){int direct[4][2] = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} };for (auto &amp;i : g_board) {if (i.second != player) {continue;}for (int k = 0; k &lt; 4; k++) {int nextRow = i.first.first + direct[k][0];int nextCol = i.first.second + direct[k][1];if (CheckPostion(nextRow, nextCol)) {continue;}auto nextIt = g_board.find(std::make_pair(nextRow, nextCol));if (nextIt != g_board.end()) {continue;}ways.push_back(std::make_tuple(i.first.first, i.first.second, nextRow, nextCol));}}}/* 一行或者一列两个连续己方棋子可以吃对方一个棋子 _○○●_：OK ○○●__：OK __○○●：OK ○○●_●：这种情况不能吃子 ○○○●_：这种情况不能吃子 _○○○●：这种情况不能吃子 _●○○●：这种情况不能吃子 ●○○●_：这种情况不能吃子*/int GetPieceNumByDirect(int row, int col, int direct[2]){int pieceNum = 0;if (direct[0] != 0 &amp;&amp; direct[1] != 0) {std::cout &lt;&lt; "错误的方向" &lt;&lt; std::endl;assert(0);return 0;}if (direct[0] != 0) {for (int i = 0; i &lt; g_rowNum; i++) {auto it = g_board.find(std::make_pair(i, col));if (it != g_board.end()) {pieceNum++;}}return pieceNum;}for (int i = 0; i &lt; g_colNum; i++) {auto it = g_board.find(std::make_pair(row, i));if (it != g_board.end()) {pieceNum++;}}return pieceNum;}// 当前走棋方棋子数量小于2，则为失败（连续两个棋子才能吃对方一个棋子）bool IsCurrentPlayLose(){return GetPieceNum(g_currentPlayer) &lt; 2;}</code></pre></li><li><p><strong>局面评估</strong>：这部分其实是大多棋类AI的关键，别看我写的局面评估只有一个语句</p><pre><code class="language-c++">// 己方棋子越多，对自己越有利int EvaluatePosition(){return GetPieceNum(WHITE) - GetPieceNum(BLACK);}</code></pre></li><li><p><strong>局面搜索</strong>：搜索算法要和评估函数结合，通过好的剪枝算法会大大提高AI的智慧，我这里就是一个简单极大极小值深度优先搜索</p><pre><code class="language-c++">int GenOneStep(int fromRow, int fromCol, int toRow, int toCol, std::vector&lt;std::pair&lt;int, int&gt;&gt; &amp;eats){std::set&lt;std::tuple&lt;int, int, int, int&gt;&gt; ways;if (!IsVaildPiece(fromRow, fromCol, toRow, toCol, g_currentPlayer)) {return -1;}// 走一步棋DeletePiece(fromRow, fromCol, g_currentPlayer);AddPiece(toRow, toCol, g_currentPlayer);// 吃子EatPiece(toRow, toCol, g_currentPlayer, eats);// 交换走棋方ChangePlayer();//DrawBoard();return 0;}void UndoOneStep(int fromRow, int fromCol, int toRow, int toCol, std::vector&lt;std::pair&lt;int, int&gt;&gt;&amp; eats){// 还原被吃掉的对方棋子for (auto&amp; i : eats) {AddPiece(i.first, i.second, g_currentPlayer); // 当前走棋方为对方}eats.clear();// 交换走棋方ChangePlayer();// 撤销上一步棋DeletePiece(toRow, toCol, g_currentPlayer);AddPiece(fromRow, fromCol, g_currentPlayer);}int Search(int depth, int&amp; fromRow, int&amp; fromCol, int &amp;toRow, int &amp;toCol){int bestValue;int value;if (depth == 0) {return EvaluatePosition();}if (g_currentPlayer == BLACK) {bestValue = INFINITY_VALUE;  // bestValue越小对黑方越有利}else {bestValue = -INFINITY_VALUE; // bestValue越大对白方越有利}std::vector&lt;std::tuple&lt;int, int, int, int&gt;&gt; ways;std::vector&lt;std::pair&lt;int, int&gt;&gt; eats;GenMoveWays(g_currentPlayer, ways);for (auto&amp; i : ways) {if (GenOneStep(std::get&lt;0&gt;(i), std::get&lt;1&gt;(i), std::get&lt;2&gt;(i), std::get&lt;3&gt;(i), eats)) {continue;}value = Search(depth - 1, fromRow, fromCol, toRow, toCol);UndoOneStep(std::get&lt;0&gt;(i), std::get&lt;1&gt;(i), std::get&lt;2&gt;(i), std::get&lt;3&gt;(i), eats);if (g_currentPlayer == BLACK) {if (value &lt; bestValue) {bestValue = value;if (depth == MAX_SEARCH_DEPTH) {fromRow = std::get&lt;0&gt;(i);fromCol = std::get&lt;1&gt;(i);toRow = std::get&lt;2&gt;(i);toCol = std::get&lt;3&gt;(i);}}}else {if (value &gt; bestValue) {bestValue = value;if (depth == MAX_SEARCH_DEPTH) {fromRow = std::get&lt;0&gt;(i);fromCol = std::get&lt;1&gt;(i);toRow = std::get&lt;2&gt;(i);toCol = std::get&lt;3&gt;(i);}}}}// 当前方已经无棋可走了if (g_currentPlayer == BLACK &amp;&amp; bestValue == INFINITY_VALUE) {// 黑方value越小越好，即搜索深度越深到达无路可走越好return INFINITY_VALUE - (MAX_SEARCH_DEPTH - depth);}if (g_currentPlayer == WHITE &amp;&amp; bestValue == -INFINITY_VALUE) {return (MAX_SEARCH_DEPTH - depth) - INFINITY_VALUE;}return bestValue;}void ComputerOneStep(){int fromRow;int fromCol;int toRow; int toCol;std::vector&lt;std::pair&lt;int, int&gt;&gt; eats;Search(MAX_SEARCH_DEPTH, fromRow, fromCol, toRow, toCol);GenOneStep(fromRow, fromCol, toRow, toCol, eats);}</code></pre></li></ul><hr><h2 id="项目链接">项目链接</h2><p><a href="https://github.com/xy007man/2KouChiYiKou">https://github.com/xy007man/2KouChiYiKou</a></p><hr><h2 id="参考链接">参考链接</h2><p><a href="https://www.zhihu.com/question/34816738">https://www.zhihu.com/question/34816738</a></p><p><a href="https://www.xqbase.com/computer.htm">https://www.xqbase.com/computer.htm</a></p><p><a href="https://www.zhihu.com/question/29472711/answer/45436565">https://www.zhihu.com/question/29472711/answer/45436565</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 极大极小值 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>踩内存</title>
+      <link href="/2021/06/22/%E8%B8%A9%E5%86%85%E5%AD%98/"/>
+      <url>/2021/06/22/%E8%B8%A9%E5%86%85%E5%AD%98/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>​对于C/C++程序员来说，踩内存问题是最难分析定位的，往往问题的源头都比较隐蔽，让人很难排查出问题的根源所在。</p><span id="more"></span><hr><h2 id="原因">原因</h2><ul><li><p>内存越界</p><ol><li><code>memset/memcpy/memmove</code> 等内存操作函数操作越界，使用这些函数时尽可能用 <code>memset_s/memcpy_s/memmove_s</code> 等安全函数替代。</li><li>内存越界的问题有个显著的特点，被踩的内存是连续的，遇到这种情况首先怀疑在被踩内存前面申请的内存的操作是否越界。</li></ol></li><li><p>数组越界/操作字符串越界</p><p>数组越界访问往往是最常见的踩内存原因，对于数组访问一定要先判断下标是否越界</p></li><li><p>野指针</p><ol><li>对于全局的变量在释放内存后一定要置为NULL，防止出现野指针</li><li>警惕浅拷贝潜在的野指针风险。浅拷贝只是拷贝了它在栈中存储的指针，它们指向的都是同一个堆内存地址，所以浅拷贝在某些情况会造成改变数据后导致别的另一份数据也同步被改变的情况；而深拷贝是直接将堆内存中存储的数据直接复制一份，不会有浅拷贝互相影响的问题。</li><li>某些时候查看 <code>coredump</code> 现场发现程序访问的地址非常小，首先怀疑空指针。因为结构体的基地址是0，程序在访问结构体成员时会进行若干字节的偏移，所以最终挂死的现场的地址非常小。</li></ol></li><li><p>多线程场景下，全局资源未作加锁保护</p><p>这种情况可能更加复杂，需要对代码进行深度检视</p></li></ul><hr><h2 id="常用定位手段">常用定位手段</h2><ul><li><p>使用系统提供的函数修改内存为只读属性，发生踩内存时程序会直接崩溃，查看相关 <code>coredump</code> 文件进行分析定位</p><ol><li><p>用户态进程：<code>mprotect</code></p><pre><code class="language-c">#include &lt;unistd.h&gt;#include &lt;sys/mmap.h&gt;int mprotect(const void *start, size_t len, int prot);</code></pre><p>函数使用方法参考：<a href="https://www.cnblogs.com/ims-/p/13222243.html">https://www.cnblogs.com/ims-/p/13222243.html</a></p></li><li><p>内核：<code>set_mem_rw</code></p><pre><code class="language-c">#include &lt;linux/kallsyms.h&gt;int set_mem_rw(unsigned long ,int)set_mem_rw = (void *)kallsyms_lookup_name("set_memory_rw"); // 这个函数内核并未导出，不能直接调用</code></pre></li></ol></li><li><p>valgrind 工具分析</p><p>valgrind是一个强大的内存管理工具，常用来检测内存泄漏和内存的非法使用</p><p>具体使用方法参考：<a href="https://blog.csdn.net/weixin_29666341/article/details/116637397">https://blog.csdn.net/weixin_29666341/article/details/116637397</a></p></li><li><p><code>GCC</code> 栈保护机制 <code>stack-protector</code></p><p>程序执行栈内存被踩，程序崩溃的位置是不确定的，为了使崩溃的地点更加接近问题点，可以在编译时加入相关编译选项</p><p>具体使用方法参考：<a href="https://www.cnblogs.com/arnoldlu/p/11630979.html">https://www.cnblogs.com/arnoldlu/p/11630979.html</a></p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 问题定位 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>反向代理和正向代理</title>
+      <link href="/2021/06/21/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/"/>
+      <url>/2021/06/21/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<h2 id="代理">代理</h2><p>​代理其实就是一个中介，A和B本来可以直连，中间插入一个C，C就是中介。刚开始的时候，代理多数是帮助内网client访问外网server用的后来出现了反向代理，"反向"这个词在这儿的意思其实是指方向相反，即代理将来自外网客户端的请求转发到内网服务器，从外到内。</p><hr><h2 id="正向代理">正向代理</h2><p>​正向代理类似一个跳板机，代理访问外部资源比如我们国内访问谷歌，直接访问访问不到，我们可以通过一个正向代理服务器，请求发到代理服，代理服务器能够访问谷歌，这样由代理去谷歌取到返回数据，再返回给我们，这样我们就能访问谷歌了。</p><p><img src="/2021/06/21/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86.png" alt="正向代理"></p><p><strong>正向代理的用途：</strong></p><ul><li><p>访问原来无法访问的资源，如google</p></li><li><p>可以做缓存，加速访问资源</p></li><li><p>对客户端访问授权，上网进行认证</p></li><li><p>代理可以记录用户访问记录（上网行为管理），对外隐藏用户信息</p></li></ul><hr><h2 id="反向代理">反向代理</h2><p>​反向代理（Reverse Proxy）实际运行方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个服务器。反向代理一般就是指Nginx，是在主服务器之外加一层代理服务器，用户的请求会发送到代理服务器上，由代理服务器请求真正的服务器，获得到结果后再将结果返回给用户。</p><p><img src="/2021/06/21/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86.png" alt="反向代理"></p><p><strong>反向代理的作用：</strong></p><ul><li><p>保证内网的安全，阻止web攻击，大型网站，通常将反向代理作为公网访问地址，Web服务器是内网</p></li><li><p>负载均衡，通过反向代理服务器来优化网站的负载</p></li></ul><hr><h2 id="CDN">CDN</h2><p>​CDN是内容分发网络（Content Delivery Network）。是为了解决用户请求响应过慢的问题。比如用户在黑龙江，服务器在海南，用户请求的速度可能受距离、带宽的影响。CDN将几台机器分发在全国各地，用户发出的请求会选择就近的CDN服务器进行处理。CDN简单的来说就是存储一些静态文件的一台或多台服务器，通过复制，缓存主服务器等方式，将文件保存其中。</p><p><img src="/2021/06/21/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/CDN.jpg" alt="CDN"></p><p><strong>CDN作用：</strong></p><ul><li>CDN作用和反向代理相同，一方面加快用户访问速度，另一方面也减轻了后端服务器的负载压力</li></ul><p><strong>CDN和反向代理的区别：</strong></p><ul><li>CDN和反向代理的基本原理都是缓存，区别在于CDN部署在网络提供商的机房，使用户在请求网站服务时，可以从距离自己最近的网络提供商机房获取数据。</li><li>反向代理则部署在网站的中心机房，当用户请求到达中心机房后，首先访问的服务器反向代理服务器，如果反向代理服务器中缓存着用户请求的资源，就将其直接返回给用户。</li></ul><hr><h2 id="应用">应用</h2><p><strong>正向代理</strong>：</p><ul><li><p>许多科学上网的软件如SS、SSR、v2ray原理上都是正向代理，可以参考：</p><p><a href="https://github.com/xiaoming2028/FreePAC">v2ray搭建教程</a><br><a href="https://github.com/233boy/v2ray">v2ray安装脚本</a></p></li></ul><p><strong>反向代理/CDN：</strong></p><ul><li><p><a href="https://www.cloudflare.com/zh-cn/">cloudfare</a> 是国外一家CDN服务商，对于个人用户提供了一些免费的服务，可以把自己的网址托管在 <code>cloudfare</code> 上，可以通过优选</p><p>IP选择最优的CDN服务器，<a href="https://github.com/badafans/better-cloudflare-ip">优选IP可以参考这个github工程</a></p></li><li><p><a href="https://www.cloudflare.com/zh-cn/">cloudfare</a> 提供了worker反向代理功能，可以自定义添加worker，提供一个提升科学上网速度的脚本</p><pre><code class="language-js">addEventListener('fetch',event =&gt; {  let url=new URL(event.request.url);  url.hostname='xxxx.xx'; // v2ray服务器的伪装网址  let request=new Request(url,event.request);  event.respondWith(    fetch(request)  )})</code></pre></li></ul><hr><h2 id="参考链接">参考链接</h2><p><a href="https://www.cnblogs.com/taostaryu/p/10547132.html">https://www.cnblogs.com/taostaryu/p/10547132.html</a></p><p><a href="https://www.pianshen.com/article/9900131597/">https://www.pianshen.com/article/9900131597/</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 代理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>ARP攻击(网关欺骗)</title>
+      <link href="/2021/06/20/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
+      <url>/2021/06/20/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/</url>
+      
+        <content type="html"><![CDATA[<p>​最近家中的网络一直不稳定，360报ARP攻击，重新插拔网线网络会通一段时间，但是过一会又不行了，遂了解了相关的背景知识。中间的曲折就不说了，最后具体原因是家中的组网是二级路由，两个路由都开启了DHCP分配地址，由于组网问题造成局域网中有两个网关。解决办法也很简单网上提供了2种方案。</p><p><img src="/2021/06/20/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/ac4bd11373f0820292b1b9c841fbfbedab641b21.png" alt="二级路由"></p><ul><li>第一种就是重新进行组网</li></ul><pre><code>[二级路由组网方案](https://www.dgzj.com/baike/92924.html)。</code></pre><ul><li>我这里通过第二种方法通过arp命令强行绑定网关和mac地址来解决网关冲突问题。</li></ul><pre><code>[Window10强行绑定ip和Mac地址的命令](https://www.jianshu.com/p/8b3dba40556f?from=singlemessage)# netsh i i show in# netsh -c i i add ne idx ip mac</code></pre><p>​如果局域网中有一台恶意的主机伪装成网关就可以抓取局域网中所有的信息，在局域网要注意个人信息的安全，最好绑定使用arp命令绑定网关。</p><pre><code>## 扩展阅读[Arp攻击 Arpspoof](https://www.jianshu.com/p/bbf50dace855)  [Arp攻击原理](https://www.zhihu.com/question/20338649?sort=created)</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ARP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>

@@ -1,0 +1,94 @@
+<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>踩内存</title><meta name="description" content="study hungry, study foolish"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><script type="text/javascript" id="maid-script" src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js?v=undefined"><script>if (window.mermaid) {
+  var options = JSON.parse(document.getElementById('maid-script').getAttribute('mermaidoptioins'));
+  mermaid.initialize(options);
+}
+</script></script><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="前言
+​	对于C/C++程序员来说，踩内存问题是最难分析定位的，往往问题的源头都比较隐蔽，让人很难排查出问题的根源所在。
+
+
+原因
+
+
+内存越界
+
+memset/memcpy/memmove 等内存操作函数操作越界，使用这些函数时尽可能用 memset_s/memcpy_s/memmove_s 等安全函数替代。
+内存越界的问题有个显著的特点，被踩的内存是连续的，遇到这种情况首先怀疑在被踩内存前面申请的内存的操作是否越界。
+
+
+
+数组越界/操作字符串越界
+数组越界访问往往是最常见的踩内存原因，对于数组访问一定要先判断下标是否越界
+
+
+野指针
+
+对于全局的变量在释放内存后一定要置为NULL，防止出现野指针
+警惕浅拷贝潜在的野指针风险。浅拷贝只是拷贝了它在栈中存储的指针，它们指向的都是同一个堆内存地址，所以浅拷贝.."><meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="study hungry,study foolish" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">未知数's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">踩内存</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0"><span class="toc-text">原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%AE%9A%E4%BD%8D%E6%89%8B%E6%AE%B5"><span class="toc-text">常用定位手段</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D"><i class="tag post-item-tag">问题定位</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">踩内存</h1><time class="has-text-grey" datetime="2021-06-22T13:38:06.000Z">2021-06-22</time><article class="mt-2 post-content"><h2 id="前言">前言</h2>
+<p>​	对于C/C++程序员来说，踩内存问题是最难分析定位的，往往问题的源头都比较隐蔽，让人很难排查出问题的根源所在。</p>
+<span id="more"></span>
+<hr>
+<h2 id="原因">原因</h2>
+<ul>
+<li>
+<p>内存越界</p>
+<ol>
+<li><code>memset/memcpy/memmove</code> 等内存操作函数操作越界，使用这些函数时尽可能用 <code>memset_s/memcpy_s/memmove_s</code> 等安全函数替代。</li>
+<li>内存越界的问题有个显著的特点，被踩的内存是连续的，遇到这种情况首先怀疑在被踩内存前面申请的内存的操作是否越界。</li>
+</ol>
+</li>
+<li>
+<p>数组越界/操作字符串越界</p>
+<p>数组越界访问往往是最常见的踩内存原因，对于数组访问一定要先判断下标是否越界</p>
+</li>
+<li>
+<p>野指针</p>
+<ol>
+<li>对于全局的变量在释放内存后一定要置为NULL，防止出现野指针</li>
+<li>警惕浅拷贝潜在的野指针风险。浅拷贝只是拷贝了它在栈中存储的指针，它们指向的都是同一个堆内存地址，所以浅拷贝在某些情况会造成改变数据后导致别的另一份数据也同步被改变的情况；而深拷贝是直接将堆内存中存储的数据直接复制一份，不会有浅拷贝互相影响的问题。</li>
+<li>某些时候查看 <code>coredump</code> 现场发现程序访问的地址非常小，首先怀疑空指针。因为结构体的基地址是0，程序在访问结构体成员时会进行若干字节的偏移，所以最终挂死的现场的地址非常小。</li>
+</ol>
+</li>
+<li>
+<p>多线程场景下，全局资源未作加锁保护</p>
+<p>这种情况可能更加复杂，需要对代码进行深度检视</p>
+</li>
+</ul>
+<hr>
+<h2 id="常用定位手段">常用定位手段</h2>
+<ul>
+<li>
+<p>使用系统提供的函数修改内存为只读属性，发生踩内存时程序会直接崩溃，查看相关 <code>coredump</code> 文件进行分析定位</p>
+<ol>
+<li>
+<p>用户态进程：<code>mprotect</code></p>
+<pre><code class="language-c">#include &lt;unistd.h&gt;
+#include &lt;sys/mmap.h&gt;
+int mprotect(const void *start, size_t len, int prot);
+</code></pre>
+<p>函数使用方法参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ims-/p/13222243.html">https://www.cnblogs.com/ims-/p/13222243.html</a></p>
+</li>
+<li>
+<p>内核：<code>set_mem_rw</code></p>
+<pre><code class="language-c">#include &lt;linux/kallsyms.h&gt;
+int set_mem_rw(unsigned long ,int)
+set_mem_rw = (void *)kallsyms_lookup_name("set_memory_rw"); // 这个函数内核并未导出，不能直接调用
+</code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>valgrind 工具分析</p>
+<p>valgrind是一个强大的内存管理工具，常用来检测内存泄漏和内存的非法使用</p>
+<p>具体使用方法参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_29666341/article/details/116637397">https://blog.csdn.net/weixin_29666341/article/details/116637397</a></p>
+</li>
+<li>
+<p><code>GCC</code> 栈保护机制 <code>stack-protector</code></p>
+<p>程序执行栈内存被踩，程序崩溃的位置是不确定的，为了使崩溃的地点更加接近问题点，可以在编译时加入相关编译选项</p>
+<p>具体使用方法参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/arnoldlu/p/11630979.html">https://www.cnblogs.com/arnoldlu/p/11630979.html</a></p>
+</li>
+</ul>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2021/06/26/%E4%BA%BA%E6%9C%BA%E5%AF%B9%E5%BC%88/" title="人机对弈"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: 人机对弈</span></a><a class="button is-default" href="/2021/06/21/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/" title="反向代理和正向代理"><span class="has-text-weight-semibold">下一页: 反向代理和正向代理</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> 未知数 2021</span></p><!--div.is-flex.is-justify-content-center.is-flex-wrap-wrap--><!--  p Powered by Hexo &verbar;&nbsp;--><!--  p.is-flex.is-justify-content-center--><!--    a(title="Hexo theme author" href='//github.com/haojen') Theme by Haojen&nbsp;--><!--  div(style="margin-top: 2px")--><!--    a(title="github-button" class="github-button" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true")--><!--div--><!--  span!= theme.user && theme.user.footnotes--></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script></body></html>

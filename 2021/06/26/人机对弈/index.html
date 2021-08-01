@@ -1,0 +1,327 @@
+<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>人机对弈</title><meta name="description" content="study hungry, study foolish"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><script type="text/javascript" id="maid-script" src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js?v=undefined"><script>if (window.mermaid) {
+  var options = JSON.parse(document.getElementById('maid-script').getAttribute('mermaidoptioins'));
+  mermaid.initialize(options);
+}
+</script></script><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="背景
+​	小时候在FC上玩过象棋游戏，印象最深的就是那个老头，每次走棋贼慢同时棋力也特高。一直想了解下人机对弈的算法，看了几篇文章后，发现基本的套路都是一样的，自己写了一个小时候玩的两口吃一口的小游戏。
+
+
+棋类AI基本步骤(以下都是基于两口吃一口这个小游戏)
+
+
+局面生成：棋子种类、开局位置
+// 5x5 棋盘，黑方和白方初始时都有5颗棋子
+/*
+  0 1 2 3 4
+ ┌─────────┐
+0│○─○─○─○─○│
+1│├─┼─┼─┼─┤│
+2│├─┼─┼─┼─┤│
+3│├─┼─┼─┼─┤│
+4│●─●─●─●─●│
+ └─────────┘
+ */
+std::string GenBoard(int row, int col, int colNum, int rowNum, std::map&amp;lt;.."><meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="study hungry,study foolish" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">未知数's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">人机对弈</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%8B%E7%B1%BBAI%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4-%E4%BB%A5%E4%B8%8B%E9%83%BD%E6%98%AF%E5%9F%BA%E4%BA%8E%E4%B8%A4%E5%8F%A3%E5%90%83%E4%B8%80%E5%8F%A3%E8%BF%99%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F"><span class="toc-text">棋类AI基本步骤(以下都是基于两口吃一口这个小游戏)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E9%93%BE%E6%8E%A5"><span class="toc-text">项目链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-text">参考链接</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/%E6%9E%81%E5%A4%A7%E6%9E%81%E5%B0%8F%E5%80%BC"><i class="tag post-item-tag">极大极小值</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">人机对弈</h1><time class="has-text-grey" datetime="2021-06-26T13:29:06.000Z">2021-06-26</time><article class="mt-2 post-content"><h2 id="背景">背景</h2>
+<p>​	小时候在FC上玩过象棋游戏，印象最深的就是那个老头，每次走棋贼慢同时棋力也特高。一直想了解下人机对弈的算法，看了几篇文章后，发现基本的套路都是一样的，自己写了一个小时候玩的<code>两口吃一口</code>的小游戏。</p>
+<img src="/2021/06/26/%E4%BA%BA%E6%9C%BA%E5%AF%B9%E5%BC%88/FC象棋.jpg" alt="FC象棋" style="zoom:50%;">
+<hr>
+<h2 id="棋类AI基本步骤-以下都是基于两口吃一口这个小游戏">棋类AI基本步骤(以下都是基于<code>两口吃一口</code>这个小游戏)</h2>
+<ul>
+<li>
+<p><strong>局面生成</strong>：棋子种类、开局位置</p>
+<pre><code class="language-c++">// 5x5 棋盘，黑方和白方初始时都有5颗棋子
+/*
+  0 1 2 3 4
+ ┌─────────┐
+0│○─○─○─○─○│
+1│├─┼─┼─┼─┤│
+2│├─┼─┼─┼─┤│
+3│├─┼─┼─┼─┤│
+4│●─●─●─●─●│
+ └─────────┘
+ */
+std::string GenBoard(int row, int col, int colNum, int rowNum, std::map&lt;std::pair&lt;int, int&gt;, int&gt; board)
+{
+	std::string str;
+	auto it = board.find(std::make_pair(row, col));
+
+	if (it != board.end()) {
+		if (it-&gt;second == WHITE) {
+			return "○";
+		}
+		if (it-&gt;second == BLACK) {
+			return "●";
+		}
+	}
+
+	if (row == 0 &amp;&amp; col == 0) {
+		str = "┌";
+	}
+	else if (row == 0 &amp;&amp; col == colNum - 1) {
+		str = "┐";
+	}
+	else if (row == rowNum - 1 &amp;&amp; col == 0) {
+		str = "└";
+	}
+	else if (row == rowNum - 1 &amp;&amp; col == colNum - 1) {
+		str = "┘";
+	}
+	else if (row == 0) {
+		str = "┬";
+	}
+	else if (col == colNum - 1) {
+		str = "┤";
+	}
+	else if (col == 0) {
+		str = "├";
+	}
+	else if (row == rowNum - 1) {
+		str = "┴";
+	}
+	else {
+		str = "┼";
+	}
+	
+	return str;
+}
+// 棋盘绘制
+void DrawBoard()
+{
+	std::string posCol;
+	std::string topBorderLine;
+	std::string bottomBorderLine;
+
+	posCol += "  ";
+	for (int i = 0; i &lt; g_colNum; i++) {
+		posCol += std::to_string(i) + " ";
+	}
+
+	GenBorderLine(topBorderLine, bottomBorderLine, g_colNum);
+	std::cout &lt;&lt; posCol &lt;&lt; std::endl;
+	std::cout &lt;&lt; topBorderLine &lt;&lt; std::endl;
+	for (int rowIdx = 0; rowIdx &lt; g_rowNum; rowIdx++) {
+		std::cout &lt;&lt; std::to_string(rowIdx) &lt;&lt; "│";
+		for (int colIdx = 0; colIdx &lt; g_colNum; colIdx++) {
+			std::cout &lt;&lt; GenBoard(rowIdx, colIdx, g_rowNum, g_colNum, g_board);
+			if (colIdx != g_colNum - 1) {
+				std::cout &lt;&lt; "─";
+			}
+		}
+		std::cout &lt;&lt; "│" &lt;&lt; std::endl;
+	}
+	std::cout &lt;&lt; bottomBorderLine &lt;&lt; std::endl;
+}
+</code></pre>
+</li>
+<li>
+<p><strong>走法生成</strong>：走棋规则、吃子规则、胜利规则</p>
+<pre><code class="language-c++">// 上下左右不超出棋盘并且目标位置没有棋子
+void GenMoveWays(int player, std::vector&lt;std::tuple&lt;int, int, int, int&gt;&gt;&amp; ways)
+{
+	int direct[4][2] = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} };
+
+	for (auto &amp;i : g_board) {
+		if (i.second != player) {
+			continue;
+		}
+		for (int k = 0; k &lt; 4; k++) {
+			int nextRow = i.first.first + direct[k][0];
+			int nextCol = i.first.second + direct[k][1];
+
+			if (CheckPostion(nextRow, nextCol)) {
+				continue;
+			}
+			auto nextIt = g_board.find(std::make_pair(nextRow, nextCol));
+			if (nextIt != g_board.end()) {
+				continue;
+			}
+			ways.push_back(std::make_tuple(i.first.first, i.first.second, nextRow, nextCol));
+		}
+	}
+}
+/* 一行或者一列两个连续己方棋子可以吃对方一个棋子
+ _○○●_：OK
+ ○○●__：OK
+ __○○●：OK
+ ○○●_●：这种情况不能吃子
+ ○○○●_：这种情况不能吃子
+ _○○○●：这种情况不能吃子
+ _●○○●：这种情况不能吃子
+ ●○○●_：这种情况不能吃子
+*/
+int GetPieceNumByDirect(int row, int col, int direct[2])
+{
+	int pieceNum = 0;
+
+	if (direct[0] != 0 &amp;&amp; direct[1] != 0) {
+		std::cout &lt;&lt; "错误的方向" &lt;&lt; std::endl;
+		assert(0);
+		return 0;
+	}
+
+	if (direct[0] != 0) {
+		for (int i = 0; i &lt; g_rowNum; i++) {
+			auto it = g_board.find(std::make_pair(i, col));
+			if (it != g_board.end()) {
+				pieceNum++;
+			}
+		}
+		return pieceNum;
+	}
+
+	for (int i = 0; i &lt; g_colNum; i++) {
+		auto it = g_board.find(std::make_pair(row, i));
+		if (it != g_board.end()) {
+			pieceNum++;
+		}
+	}
+	return pieceNum;
+}
+
+// 当前走棋方棋子数量小于2，则为失败（连续两个棋子才能吃对方一个棋子）
+bool IsCurrentPlayLose()
+{	
+	return GetPieceNum(g_currentPlayer) &lt; 2;
+}
+</code></pre>
+</li>
+<li>
+<p><strong>局面评估</strong>：这部分其实是大多棋类AI的关键，别看我写的局面评估只有一个语句</p>
+<pre><code class="language-c++">// 己方棋子越多，对自己越有利
+int EvaluatePosition()
+{
+	return GetPieceNum(WHITE) - GetPieceNum(BLACK);
+}
+</code></pre>
+</li>
+<li>
+<p><strong>局面搜索</strong>：搜索算法要和评估函数结合，通过好的剪枝算法会大大提高AI的智慧，我这里就是一个简单极大极小值深度优先搜索</p>
+<pre><code class="language-c++">int GenOneStep(int fromRow, int fromCol, int toRow, int toCol, std::vector&lt;std::pair&lt;int, int&gt;&gt; &amp;eats)
+{
+	std::set&lt;std::tuple&lt;int, int, int, int&gt;&gt; ways;
+
+	if (!IsVaildPiece(fromRow, fromCol, toRow, toCol, g_currentPlayer)) {
+		return -1;
+	}
+
+	// 走一步棋
+	DeletePiece(fromRow, fromCol, g_currentPlayer);
+	AddPiece(toRow, toCol, g_currentPlayer);
+	
+	// 吃子
+	EatPiece(toRow, toCol, g_currentPlayer, eats);
+
+	// 交换走棋方
+	ChangePlayer();
+
+	//DrawBoard();
+	return 0;
+}
+
+void UndoOneStep(int fromRow, int fromCol, int toRow, int toCol, std::vector&lt;std::pair&lt;int, int&gt;&gt;&amp; eats)
+{
+	// 还原被吃掉的对方棋子
+	for (auto&amp; i : eats) {
+		AddPiece(i.first, i.second, g_currentPlayer); // 当前走棋方为对方
+	}
+	eats.clear();
+
+	// 交换走棋方
+	ChangePlayer();
+	
+	// 撤销上一步棋
+	DeletePiece(toRow, toCol, g_currentPlayer);
+	AddPiece(fromRow, fromCol, g_currentPlayer);
+}
+
+int Search(int depth, int&amp; fromRow, int&amp; fromCol, int &amp;toRow, int &amp;toCol)
+{
+	int bestValue;
+	int value;
+	if (depth == 0) {
+		return EvaluatePosition();
+	}
+
+	if (g_currentPlayer == BLACK) {
+		bestValue = INFINITY_VALUE;  // bestValue越小对黑方越有利
+	}
+	else {
+		bestValue = -INFINITY_VALUE; // bestValue越大对白方越有利
+	}
+
+	std::vector&lt;std::tuple&lt;int, int, int, int&gt;&gt; ways;
+	std::vector&lt;std::pair&lt;int, int&gt;&gt; eats;
+
+	GenMoveWays(g_currentPlayer, ways);
+	for (auto&amp; i : ways) {
+		if (GenOneStep(std::get&lt;0&gt;(i), std::get&lt;1&gt;(i), std::get&lt;2&gt;(i), std::get&lt;3&gt;(i), eats)) {
+			continue;
+		}
+		value = Search(depth - 1, fromRow, fromCol, toRow, toCol);
+		UndoOneStep(std::get&lt;0&gt;(i), std::get&lt;1&gt;(i), std::get&lt;2&gt;(i), std::get&lt;3&gt;(i), eats);
+		if (g_currentPlayer == BLACK) {
+			if (value &lt; bestValue) {
+				bestValue = value;
+				if (depth == MAX_SEARCH_DEPTH) {
+					fromRow = std::get&lt;0&gt;(i);
+					fromCol = std::get&lt;1&gt;(i);
+					toRow = std::get&lt;2&gt;(i);
+					toCol = std::get&lt;3&gt;(i);
+				}
+			}
+		}
+		else {
+			if (value &gt; bestValue) {
+				bestValue = value;
+				if (depth == MAX_SEARCH_DEPTH) {
+					fromRow = std::get&lt;0&gt;(i);
+					fromCol = std::get&lt;1&gt;(i);
+					toRow = std::get&lt;2&gt;(i);
+					toCol = std::get&lt;3&gt;(i);
+				}
+			}
+		}
+	}
+
+	// 当前方已经无棋可走了
+	if (g_currentPlayer == BLACK &amp;&amp; bestValue == INFINITY_VALUE) {
+		// 黑方value越小越好，即搜索深度越深到达无路可走越好
+		return INFINITY_VALUE - (MAX_SEARCH_DEPTH - depth);
+	}
+
+	if (g_currentPlayer == WHITE &amp;&amp; bestValue == -INFINITY_VALUE) {
+		return (MAX_SEARCH_DEPTH - depth) - INFINITY_VALUE;
+	}
+
+	return bestValue;
+}
+
+void ComputerOneStep()
+{
+	int fromRow;
+	int fromCol;
+	int toRow; 
+	int toCol;
+
+	std::vector&lt;std::pair&lt;int, int&gt;&gt; eats;
+
+	Search(MAX_SEARCH_DEPTH, fromRow, fromCol, toRow, toCol);
+
+	GenOneStep(fromRow, fromCol, toRow, toCol, eats);
+}
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="项目链接">项目链接</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/xy007man/2KouChiYiKou">https://github.com/xy007man/2KouChiYiKou</a></p>
+<hr>
+<h2 id="参考链接">参考链接</h2>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/34816738">https://www.zhihu.com/question/34816738</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.xqbase.com/computer.htm">https://www.xqbase.com/computer.htm</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/29472711/answer/45436565">https://www.zhihu.com/question/29472711/answer/45436565</a></p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2021/06/27/%E5%AD%97%E7%AC%A6%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8_%E6%9D%82%E9%A1%B9%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/" title="Linux字符设备驱动与杂项设备驱动"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: Linux字符设备驱动与杂项设备驱动</span></a><a class="button is-default" href="/2021/06/22/%E8%B8%A9%E5%86%85%E5%AD%98/" title="踩内存"><span class="has-text-weight-semibold">下一页: 踩内存</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> 未知数 2021</span></p><!--div.is-flex.is-justify-content-center.is-flex-wrap-wrap--><!--  p Powered by Hexo &verbar;&nbsp;--><!--  p.is-flex.is-justify-content-center--><!--    a(title="Hexo theme author" href='//github.com/haojen') Theme by Haojen&nbsp;--><!--  div(style="margin-top: 2px")--><!--    a(title="github-button" class="github-button" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true")--><!--div--><!--  span!= theme.user && theme.user.footnotes--></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script></body></html>
