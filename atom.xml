@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-08-06T15:02:50.522Z</updated>
+  <updated>2021-08-07T13:52:57.152Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>H.265/HEVC环路滤波技术</title>
+    <link href="http://example.com/2021/08/07/%E5%8E%BB%E5%9D%97%E6%BB%A4%E6%B3%A2%E5%92%8CSAO/"/>
+    <id>http://example.com/2021/08/07/%E5%8E%BB%E5%9D%97%E6%BB%A4%E6%B3%A2%E5%92%8CSAO/</id>
+    <published>2021-08-07T13:52:53.000Z</published>
+    <updated>2021-08-07T13:52:57.152Z</updated>
+    
+    <content type="html"><![CDATA[<p>​<code>H.265/HEVC</code> 仍然采用基于块的混合编码框架，方块效应、振铃效应、颜色偏差以及图像模糊等失真效应仍存在。为降低这类失真对视频的影响，<code>H.265/HEVC</code>采用环路滤波技术，包括去方块滤波（Deblocking Filter）和像素自适应补偿（Sample Adaptive Offset）两个模块。去方块滤波用于降低方块效应，像素自适应补偿用于改善振铃效应。如图所示可以看出，经过滤波的重构像素才能作为后续编码像素参考使用。环路滤波处理后的重建图像更有利于参考，进一步减小后续编码像素的预测残差，可有效地提高视频的主观质量。</p><span id="more"></span><p><img src="/2021/08/07/%E5%8E%BB%E5%9D%97%E6%BB%A4%E6%B3%A2%E5%92%8CSAO/%E7%8E%AF%E8%B7%AF%E6%BB%A4%E6%B3%A2.png" alt="环路滤波"></p><hr><h2 id="块效应">块效应</h2><p>块效应是指图像中编码块编解不连续，如图所示，压缩重建图像有明显的方块效应，严重影响主观质量。</p><p><img src="/2021/08/07/%E5%8E%BB%E5%9D%97%E6%BB%A4%E6%B3%A2%E5%92%8CSAO/421096-20160518153202404-1659522803.gif" alt="img"></p><hr><h2 id="块效应产生原因">块效应产生原因</h2><ul><li>各个块变换量化编码过程独立，相当于对各个块使用了不同参数的滤波器分别滤波，因此各块引入的量化误差大小及其分布特征相互独立，导致相邻编解的不连续。</li><li>运动补偿预测过程中，相邻块的预测值可能来自不同图像的不同位置，这样就导致预测残差信号在块的边界产生数值不连续。</li><li>时域预测技术使得参考图像中窜在的边界不连续可能会传递到后续编码图像</li></ul><hr><h2 id="去方块滤波技术">去方块滤波技术</h2><p>​滤波的主要工作就是判断块边界是否需要进行滤波，并且决定采用的滤波强度（大白话就是对边界多少个像素进行平滑，即取均值）。过强的滤波会造成图像细节不必要的平滑，而缺乏滤波则会造成块效应。</p><ul><li>确定滤波边界</li><li>计算边界强度</li><li>对亮度分量进行滤波开关决策、滤波强弱选择</li><li>滤波</li></ul><hr><h2 id="振铃效应">振铃效应</h2><p>所谓“振铃”，就是指输出图像的灰度剧烈变化处产生的震荡，就好像钟被敲击后产生的空气震荡。</p><img src="/2021/08/07/%E5%8E%BB%E5%9D%97%E6%BB%A4%E6%B3%A2%E5%92%8CSAO/振铃效应.png" alt="振铃效应" style="zoom:200%;"><hr><h2 id="振铃效应产生原因">振铃效应产生原因</h2><ul><li><p><code>H.265/HEVC</code> 采用基于块的<code>DCT</code>变换，并在频域对变换系数进行量化。对于强边缘，由于高频系数的量化失真，解码后会在边缘周围产生波纹现象，造成此现象的根本原因是高频信息丢失。如图所示，实线中的高频信息丢失后变成了虚线（实线表示原始像素值，虚线表示重构像素值）。可以看出重构像素值在边缘两侧上下波动。</p><p><img src="/2021/08/07/%E5%8E%BB%E5%9D%97%E6%BB%A4%E6%B3%A2%E5%92%8CSAO/%E6%8C%AF%E9%93%83%E6%95%88%E5%BA%942.png" alt="振铃效应"></p></li></ul><hr><h2 id="像素自适应补偿">像素自适应补偿</h2><p>像素值原来是平坦区，因为量化丢弃了部分高频分量，形成了某些像素值得偏移，使得原来相对平坦的像素值关系或多或少地形成局部峰点、谷点或拐点。那么，像素自适应补偿就是人为地对这些飘逸的像素加上一个适当的相反的补偿量，以抵消编码造成的偏移。</p><p><img src="/2021/08/07/%E5%8E%BB%E5%9D%97%E6%BB%A4%E6%B3%A2%E5%92%8CSAO/3596589-2c845f743b4e20a3.png" alt="img"></p><hr><h2 id="参考链接">参考链接</h2><ul><li><p>5.H.265/HEVC—— 环路后处理 <a href="https://www.jianshu.com/p/1de7e26001f4">https://www.jianshu.com/p/1de7e26001f4</a></p></li><li><p>新一代高效视频编码H.265HEVC原理、标准与实现 [万帅，杨付正 编著] 2014年版</p></li></ul>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;​	&lt;code&gt;H.265/HEVC&lt;/code&gt; 仍然采用基于块的混合编码框架，方块效应、振铃效应、颜色偏差以及图像模糊等失真效应仍存在。为降低这类失真对视频的影响，&lt;code&gt;H.265/HEVC&lt;/code&gt;采用环路滤波技术，包括去方块滤波（Deblocking Filter）和像素自适应补偿（Sample Adaptive Offset）两个模块。去方块滤波用于降低方块效应，像素自适应补偿用于改善振铃效应。如图所示可以看出，经过滤波的重构像素才能作为后续编码像素参考使用。环路滤波处理后的重建图像更有利于参考，进一步减小后续编码像素的预测残差，可有效地提高视频的主观质量。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="视频" scheme="http://example.com/categories/%E8%A7%86%E9%A2%91/"/>
+    
+    
+    <category term="去块滤波" scheme="http://example.com/tags/%E5%8E%BB%E5%9D%97%E6%BB%A4%E6%B3%A2/"/>
+    
+    <category term="像素自适应补偿" scheme="http://example.com/tags/%E5%83%8F%E7%B4%A0%E8%87%AA%E9%80%82%E5%BA%94%E8%A1%A5%E5%81%BF/"/>
+    
+  </entry>
   
   <entry>
     <title>集线器、交换机、路由器</title>
@@ -294,13 +317,12 @@ A[字符设备驱动框架]--&amp;gt;B1[驱动初始化]
     <link href="http://example.com/2021/06/22/%E8%B8%A9%E5%86%85%E5%AD%98/"/>
     <id>http://example.com/2021/06/22/%E8%B8%A9%E5%86%85%E5%AD%98/</id>
     <published>2021-06-22T13:38:06.000Z</published>
-    <updated>2021-08-01T14:49:21.295Z</updated>
+    <updated>2021-08-07T13:05:47.929Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>​对于C/C++程序员来说，踩内存问题是最难分析定位的，往往问题的源头都比较隐蔽，让人很难排查出问题的根源所在。</p><span id="more"></span><hr><h2 id="原因">原因</h2><ul><li><p>内存越界</p><ol><li><code>memset/memcpy/memmove</code> 等内存操作函数操作越界，使用这些函数时尽可能用 <code>memset_s/memcpy_s/memmove_s</code> 等安全函数替代。</li><li>内存越界的问题有个显著的特点，被踩的内存是连续的，遇到这种情况首先怀疑在被踩内存前面申请的内存的操作是否越界。</li></ol></li><li><p>数组越界/操作字符串越界</p><p>数组越界访问往往是最常见的踩内存原因，对于数组访问一定要先判断下标是否越界</p></li><li><p>野指针</p><ol><li>对于全局的变量在释放内存后一定要置为NULL，防止出现野指针</li><li>警惕浅拷贝潜在的野指针风险。浅拷贝只是拷贝了它在栈中存储的指针，它们指向的都是同一个堆内存地址，所以浅拷贝在某些情况会造成改变数据后导致别的另一份数据也同步被改变的情况；而深拷贝是直接将堆内存中存储的数据直接复制一份，不会有浅拷贝互相影响的问题。</li><li>某些时候查看 <code>coredump</code> 现场发现程序访问的地址非常小，首先怀疑空指针。因为结构体的基地址是0，程序在访问结构体成员时会进行若干字节的偏移，所以最终挂死的现场的地址非常小。</li></ol></li><li><p>多线程场景下，全局资源未作加锁保护</p><p>这种情况可能更加复杂，需要对代码进行深度检视</p></li></ul><hr><h2 id="常用定位手段">常用定位手段</h2><ul><li><p>使用系统提供的函数修改内存为只读属性，发生踩内存时程序会直接崩溃，查看相关 <code>coredump</code> 文件进行分析定位</p><ol><li><p>用户态进程：<code>mprotect</code></p><pre><code class="language-c">#include &lt;unistd.h&gt;#include &lt;sys/mmap.h&gt;int mprotect(const void *start, size_t len, int prot);</code></pre><p>函数使用方法参考：<a href="https://www.cnblogs.com/ims-/p/13222243.html">https://www.cnblogs.com/ims-/p/13222243.html</a></p></li><li><p>内核：<code>set_mem_rw</code></p><pre><code class="language-c">#include &lt;linux/kallsyms.h&gt;int set_mem_rw(unsigned long ,int)set_mem_rw = (void *)kallsyms_lookup_name("set_memory_rw"); // 这个函数内核并未导出，不能直接调用</code></pre></li></ol></li><li><p>valgrind 工具分析</p><p>valgrind是一个强大的内存管理工具，常用来检测内存泄漏和内存的非法使用</p><p>具体使用方法参考：<a href="https://blog.csdn.net/weixin_29666341/article/details/116637397">https://blog.csdn.net/weixin_29666341/article/details/116637397</a></p></li><li><p><code>GCC</code> 栈保护机制 <code>stack-protector</code></p><p>程序执行栈内存被踩，程序崩溃的位置是不确定的，为了使崩溃的地点更加接近问题点，可以在编译时加入相关编译选项</p><p>具体使用方法参考：<a href="https://www.cnblogs.com/arnoldlu/p/11630979.html">https://www.cnblogs.com/arnoldlu/p/11630979.html</a></p></li></ul>]]></content>
+    <content type="html"><![CDATA[<p>​对于C/C++程序员来说，踩内存问题是最难分析定位的，往往问题的源头都比较隐蔽，让人很难排查出问题的根源所在。</p><span id="more"></span><hr><h2 id="原因">原因</h2><ul><li><p>内存越界</p><ol><li><code>memset/memcpy/memmove</code> 等内存操作函数操作越界，使用这些函数时尽可能用 <code>memset_s/memcpy_s/memmove_s</code> 等安全函数替代。</li><li>内存越界的问题有个显著的特点，被踩的内存是连续的，遇到这种情况首先怀疑在被踩内存前面申请的内存的操作是否越界。</li></ol></li><li><p>数组越界/操作字符串越界</p><p>数组越界访问往往是最常见的踩内存原因，对于数组访问一定要先判断下标是否越界</p></li><li><p>野指针</p><ol><li>对于全局的变量在释放内存后一定要置为NULL，防止出现野指针</li><li>警惕浅拷贝潜在的野指针风险。浅拷贝只是拷贝了它在栈中存储的指针，它们指向的都是同一个堆内存地址，所以浅拷贝在某些情况会造成改变数据后导致别的另一份数据也同步被改变的情况；而深拷贝是直接将堆内存中存储的数据直接复制一份，不会有浅拷贝互相影响的问题。</li><li>某些时候查看 <code>coredump</code> 现场发现程序访问的地址非常小，首先怀疑空指针。因为结构体的基地址是0，程序在访问结构体成员时会进行若干字节的偏移，所以最终挂死的现场的地址非常小。</li></ol></li><li><p>多线程场景下，全局资源未作加锁保护</p><p>这种情况可能更加复杂，需要对代码进行深度检视</p></li></ul><hr><h2 id="常用定位手段">常用定位手段</h2><ul><li><p>使用系统提供的函数修改内存为只读属性，发生踩内存时程序会直接崩溃，查看相关 <code>coredump</code> 文件进行分析定位</p><ol><li><p>用户态进程：<code>mprotect</code></p><pre><code class="language-c">#include &lt;unistd.h&gt;#include &lt;sys/mmap.h&gt;int mprotect(const void *start, size_t len, int prot);</code></pre><p>函数使用方法参考：<a href="https://www.cnblogs.com/ims-/p/13222243.html">https://www.cnblogs.com/ims-/p/13222243.html</a></p></li><li><p>内核：<code>set_mem_rw</code></p><pre><code class="language-c">#include &lt;linux/kallsyms.h&gt;int set_mem_rw(unsigned long ,int)set_mem_rw = (void *)kallsyms_lookup_name("set_memory_rw"); // 这个函数内核并未导出，不能直接调用</code></pre></li></ol></li><li><p>valgrind 工具分析</p><p>valgrind是一个强大的内存管理工具，常用来检测内存泄漏和内存的非法使用</p><p>具体使用方法参考：<a href="https://blog.csdn.net/weixin_29666341/article/details/116637397">https://blog.csdn.net/weixin_29666341/article/details/116637397</a></p></li><li><p><code>GCC</code> 栈保护机制 <code>stack-protector</code></p><p>程序执行栈内存被踩，程序崩溃的位置是不确定的，为了使崩溃的地点更加接近问题点，可以在编译时加入相关编译选项</p><p>具体使用方法参考：<a href="https://www.cnblogs.com/arnoldlu/p/11630979.html">https://www.cnblogs.com/arnoldlu/p/11630979.html</a></p></li></ul>]]></content>
     
     
-    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
-&lt;p&gt;​	对于C/C++程序员来说，踩内存问题是最难分析定位的，往往问题的源头都比较隐蔽，让人很难排查出问题的根源所在。&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;​	对于C/C++程序员来说，踩内存问题是最难分析定位的，往往问题的源头都比较隐蔽，让人很难排查出问题的根源所在。&lt;/p&gt;</summary>
     
     
     
