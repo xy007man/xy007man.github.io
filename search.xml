@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>内核同步机制：自旋锁</title>
+      <link href="/2021/08/08/%E5%86%85%E6%A0%B8%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6_%E8%87%AA%E6%97%8B%E9%94%81/"/>
+      <url>/2021/08/08/%E5%86%85%E6%A0%B8%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6_%E8%87%AA%E6%97%8B%E9%94%81/</url>
+      
+        <content type="html"><![CDATA[<h2 id="自旋锁系列函数">自旋锁系列函数</h2><table><thead><tr><th>函数</th><th>功能说明</th></tr></thead><tbody><tr><td>void spin_lock(spinlock_t *lock)</td><td>进程和进程之间同步</td></tr><tr><td>void spin_lock_bh(spinlock_t *lock)</td><td>和本地软中断之间同步</td></tr><tr><td>void spin_lock_irq(spinlock_t *lock)</td><td>和本地硬件中断之间同步</td></tr><tr><td>void spin_lock_irqsave(lock, flags)</td><td>和本地硬件中断之间同步并保存本地中断状态</td></tr><tr><td>int spin_trylock(spinlock_t *lock)</td><td>尝试获取锁，如果成功返回非0值，否则返回0值</td></tr></tbody></table><hr><h2 id="自旋锁特点">自旋锁特点</h2><ul><li><code>spinlock</code>是一种死等的锁机制</li><li>临界区执行时间短且不可睡眠，可以在中断上下文中使用。由于<code>spinlock</code>死等的这种特性，如果临界区执行时间长，那么不断在临界区死等的执行单元会浪费CPU资源</li></ul><hr><h2 id="自旋锁的公平性">自旋锁的公平性</h2><pre><code class="language-c">typedef struct spinlock {union {struct raw_spinlock rlock;#ifdef CONFIG_DEBUG_LOCK_ALLOC# define LOCK_PADSIZE (offsetof(struct raw_spinlock, dep_map))struct {u8 __padding[LOCK_PADSIZE];struct lockdep_map dep_map;};#endif};} spinlock_t;typedef struct raw_spinlock {arch_spinlock_t raw_lock;#ifdef CONFIG_GENERIC_LOCKBREAKunsigned int break_lock;#endif#ifdef CONFIG_DEBUG_SPINLOCKunsigned int magic, owner_cpu;void *owner;#endif#ifdef CONFIG_DEBUG_LOCK_ALLOCstruct lockdep_map dep_map;#endif} raw_spinlock_t;typedef struct {union {u32 slock;struct __raw_tickets {#ifdef __ARMEB__u16 next;u16 owner;#elseu16 owner; // owner表示持有这个数字的thread可以获取自旋锁u16 next; // next表示如果后续再有thread请求获取这个自旋锁，就给他分配这个数字#endif} tickets;};} arch_spinlock_t;</code></pre><ul><li><p>数据结构：spinlock_t --&gt; raw_spinlock_t --&gt; arch_spinlock_t</p></li><li><p>自旋锁公平调度实现方式</p><ul><li>刚开始owner = next = 0</li><li>第一个thread获取spinlock，可以获取成功，此时owner = 0， next = 0</li><li>第二个thread获取spinlock，如果第一个thread还没有释放spinlock，则next++，next变为1</li><li>第三个thread获取spinlock，如果第一个thread还没有释放spinlock，则next++，next变为2</li><li>此时第一个thread释放spinlock，则执行owner++，owner = 1</li><li>虽然此时第二个thread和第三个thread都在等待spinlock，但是因为第二个thread的next=owner，所以第二个thread可以获取到spinlock，第三个thread则继续等待，这样保证了spinlock的唤醒机制是先到先唤醒，后到后唤醒，保证了公平性。</li></ul><pre><code class="language-c">static inline void arch_spin_lock(arch_spinlock_t *lock){unsigned long tmp;u32 newval;arch_spinlock_t lockval;prefetchw(&amp;lock-&gt;slock);    // 下面这段汇编翻译成C语言就是    /*    lockval = lock-&gt;slock;    newval = lockval + (1 &lt;&lt; TICKET_SHIFT) &lt;=等价于=&gt; newval.ticket.next = lockval.tickets.next++    lockval = newval    */__asm__ __volatile__("1:ldrex%0, [%3]\n""add%1, %0, %4\n""strex%2, %1, [%3]\n""teq%2, #0\n""bne1b": "=&amp;r" (lockval), "=&amp;r" (newval), "=&amp;r" (tmp): "r" (&amp;lock-&gt;slock), "I" (1 &lt;&lt; TICKET_SHIFT): "cc");while (lockval.tickets.next != lockval.tickets.owner) { // 死等循环，直到 owner == nextwfe(); // cpu进入低功耗状态lockval.tickets.owner = ACCESS_ONCE(lock-&gt;tickets.owner);}smp_mb();}</code></pre></li></ul><hr><h2 id="参考链接">参考链接</h2><ul><li><p>自旋锁Spinlock <a href="https://blog.csdn.net/longwang155069/article/details/52055876">https://blog.csdn.net/longwang155069/article/details/52055876</a></p></li><li><p>linux内核开发第18讲：spinlock在SMP下的源码实现 <a href="https://www.bilibili.com/video/BV1Yh411R7YC">https://www.bilibili.com/video/BV1Yh411R7YC</a></p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 自旋锁 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>H.265/HEVC环路滤波技术</title>
       <link href="/2021/08/07/%E5%8E%BB%E5%9D%97%E6%BB%A4%E6%B3%A2%E5%92%8CSAO/"/>
       <url>/2021/08/07/%E5%8E%BB%E5%9D%97%E6%BB%A4%E6%B3%A2%E5%92%8CSAO/</url>
@@ -148,31 +173,6 @@
         <tags>
             
             <tag> 信号量 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>内核同步机制：自旋锁</title>
-      <link href="/2021/07/17/%E5%86%85%E6%A0%B8%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6_%E8%87%AA%E6%97%8B%E9%94%81/"/>
-      <url>/2021/07/17/%E5%86%85%E6%A0%B8%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6_%E8%87%AA%E6%97%8B%E9%94%81/</url>
-      
-        <content type="html"><![CDATA[<h2 id="自旋锁系列函数">自旋锁系列函数</h2><table><thead><tr><th>函数</th><th>功能说明</th></tr></thead><tbody><tr><td>void spin_lock(spinlock_t *lock)</td><td>进程和进程之间同步</td></tr><tr><td>void spin_lock_bh(spinlock_t *lock)</td><td>和本地软中断之间同步</td></tr><tr><td>void spin_lock_irq(spinlock_t *lock)</td><td>和本地硬件中断之间同步</td></tr><tr><td>void spin_lock_irqsave(lock, flags)</td><td>和本地硬件中断之间同步并保存本地中断状态</td></tr><tr><td>int spin_trylock(spinlock_t *lock)</td><td>尝试获取锁，如果成功返回非0值，否则返回0值</td></tr></tbody></table><hr><h2 id="自旋锁特点">自旋锁特点</h2><ul><li><code>spinlock</code>是一种死等的锁机制</li><li>临界区执行时间短且不可睡眠，可以在中断上下文中使用。由于<code>spinlock</code>死等的这种特性，如果临界区执行时间长，那么不断在临界区死等的执行单元会浪费CPU资源</li></ul><hr><h2 id="自旋锁的公平性">自旋锁的公平性</h2><pre><code class="language-c">typedef struct spinlock {union {struct raw_spinlock rlock;#ifdef CONFIG_DEBUG_LOCK_ALLOC# define LOCK_PADSIZE (offsetof(struct raw_spinlock, dep_map))struct {u8 __padding[LOCK_PADSIZE];struct lockdep_map dep_map;};#endif};} spinlock_t;typedef struct raw_spinlock {arch_spinlock_t raw_lock;#ifdef CONFIG_GENERIC_LOCKBREAKunsigned int break_lock;#endif#ifdef CONFIG_DEBUG_SPINLOCKunsigned int magic, owner_cpu;void *owner;#endif#ifdef CONFIG_DEBUG_LOCK_ALLOCstruct lockdep_map dep_map;#endif} raw_spinlock_t;typedef struct {union {u32 slock;struct __raw_tickets {#ifdef __ARMEB__u16 next;u16 owner;#elseu16 owner; // owner表示持有这个数字的thread可以获取自旋锁u16 next; // next表示如果后续再有thread请求获取这个自旋锁，就给他分配这个数字#endif} tickets;};} arch_spinlock_t;</code></pre><ul><li><p>数据结构：spinlock_t --&gt; raw_spinlock_t --&gt; arch_spinlock_t</p></li><li><p>自旋锁公平调度实现方式</p><ul><li>刚开始owner = next = 0</li><li>第一个thread获取spinlock，可以获取成功，此时owner = 0， next = 0</li><li>第二个thread获取spinlock，如果第一个thread还没有释放spinlock，则next++，next变为1</li><li>第三个thread获取spinlock，如果第一个thread还没有释放spinlock，则next++，next变为2</li><li>此时第一个thread释放spinlock，则执行owner++，owner = 1</li><li>虽然此时第二个thread和第三个thread都在等待spinlock，但是因为第二个thread的next=owner，所以第二个thread可以获取到spinlock，第三个thread则继续等待，这样保证了spinlock的唤醒机制是先到先唤醒，后到后唤醒，保证了公平性。</li></ul><pre><code class="language-c">static inline void arch_spin_lock(arch_spinlock_t *lock){unsigned long tmp;u32 newval;arch_spinlock_t lockval;prefetchw(&amp;lock-&gt;slock);    // 下面这段汇编翻译成C语言就是    /*    lockval = lock-&gt;slock;    newval = lockval + (1 &lt;&lt; TICKET_SHIFT) &lt;=等价于=&gt; newval.ticket.next = lockval.tickets.next++    lockval = newval    */__asm__ __volatile__("1:ldrex%0, [%3]\n""add%1, %0, %4\n""strex%2, %1, [%3]\n""teq%2, #0\n""bne1b": "=&amp;r" (lockval), "=&amp;r" (newval), "=&amp;r" (tmp): "r" (&amp;lock-&gt;slock), "I" (1 &lt;&lt; TICKET_SHIFT): "cc");while (lockval.tickets.next != lockval.tickets.owner) { // 死等循环，直到 owner == nextwfe(); // cpu进入低功耗状态lockval.tickets.owner = ACCESS_ONCE(lock-&gt;tickets.owner);}smp_mb();}</code></pre></li></ul><hr><h2 id="参考链接">参考链接</h2><ul><li><p>自旋锁Spinlock <a href="https://blog.csdn.net/longwang155069/article/details/52055876">https://blog.csdn.net/longwang155069/article/details/52055876</a></p></li><li><p>linux内核开发第18讲：spinlock在SMP下的源码实现 <a href="https://www.bilibili.com/video/BV1Yh411R7YC">https://www.bilibili.com/video/BV1Yh411R7YC</a></p></li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> Linux </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> spin lock </tag>
             
         </tags>
       
