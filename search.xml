@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>视频协议中常见算法</title>
+      <link href="/2021/08/17/%E8%A7%86%E9%A2%91%E5%8D%8F%E8%AE%AE%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/"/>
+      <url>/2021/08/17/%E8%A7%86%E9%A2%91%E5%8D%8F%E8%AE%AE%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>​本文不推导具体公式，仅仅讲述一下在视频编码过程使用的算法。</p><p><img src="/2021/08/17/%E8%A7%86%E9%A2%91%E5%8D%8F%E8%AE%AE%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/20180416220957998.png" alt="编码流程图"></p><span id="more"></span><h2 id="运动估计（ME，Motion-Estimation）">运动估计（ME，Motion Estimation）</h2><ul><li>SAD、SATD、SSD、MSE、PSNR：视频编码失真测度，SAD和SATD常用在视频编码的模式选择</li><li>三步搜索、菱形搜索、六边形搜索：运动搜索算法，找到最佳匹配快</li><li>亚像素：根据相邻像素值计算得到，理论存在于实际像素之间的中间值，常用于提升运动搜索的精度</li></ul><h2 id="变换（T）">变换（T）</h2><ul><li>DST变换：H265帧内4x4模式亮度风量残差编码</li><li>DCT变换：H265除帧内4x4模式，其他残差编码均为DCT</li><li>Hadamard变换：用来计算SATD、编码H264直流分量，比DCT变换复杂度低</li></ul><h2 id="熵编码（Entropy-encode）">熵编码（Entropy encode）</h2><ul><li>CAVLC：实现简单，效率不如CABAC</li><li>CABAC：在不同的上下文环境中使用不同的概率模型来编码</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 视频 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>内核中的锁</title>
       <link href="/2021/08/16/%E5%86%85%E6%A0%B8%E4%B8%AD%E7%9A%84%E9%94%81/"/>
       <url>/2021/08/16/%E5%86%85%E6%A0%B8%E4%B8%AD%E7%9A%84%E9%94%81/</url>
