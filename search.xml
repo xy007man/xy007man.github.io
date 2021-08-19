@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Linux nice 命令</title>
+      <link href="/2021/08/19/%E6%8C%87%E5%AE%9A%E8%BF%9B%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7/"/>
+      <url>/2021/08/19/%E6%8C%87%E5%AE%9A%E8%BF%9B%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7/</url>
+      
+        <content type="html"><![CDATA[<p>​Linux nice命令以更改过的优先序来执行程序，如果未指定程序，则会印出目前的排程优先序，内定的 adjustment 为 10，范围为 -20（最高优先序）到 19（最低优先序）。</p><p>使用权限：所有使用者。设定为负数需要管理者权限</p><h2 id="语法">语法</h2><pre><code class="language-shell">nice [-n adjustment] [-adjustment] [--adjustment=adjustment] [--help] [--version] [command [arg...]]</code></pre><h2 id="参数说明">参数说明</h2><ul><li><p>-n adjustment, -adjustment, --adjustment=adjustment 皆为将该原有优先序的增加 adjustment</p></li><li><p>–help 显示求助讯息</p></li><li><p>–version 显示版本资讯</p></li></ul><h2 id="实例">实例</h2><pre><code class="language-shell"># vi &amp; //后台运行[1] 15297# nice vi &amp; //设置默认优先级[2] 15298[1]+ Stopped         vi# nice -n 19 vi &amp; //设置优先级为19[3] 15299[2]+ Stopped         nice vi# nice -n -20 vi &amp; //设置优先级为 -20[4] 15300[3]+ Stopped         nice -n 19 vi# ps -l //显示进程F S  UID  PID PPID C PRI NI ADDR SZ WCHAN TTY     TIME CMD4 S   0 15278 15212 0 80  0 - 1208 wait  pts/2  00:00:00 bash0 T   0 15297 15278 0 80  0 - 2687 signal pts/2  00:00:00 vi0 T   0 15298 15278 0 90 10 - 2687 signal pts/2  00:00:00 vi0 T   0 15299 15278 1 99 19 - 2687 signal pts/2  00:00:00 vi4 T   0 15300 15278 3 60 -20 - 2687 signal pts/2  00:00:00 vi4 R   0 15301 15278 0 80  0 -  625 -   pts/2  00:00:00 ps[4]+ Stopped         nice -n -20 vi</code></pre><blockquote><p>注意：PRI表示进程当前的总优先级，值越小表示优先级越高，由进程默认的PRI加上NI得到，即PRI(new) = PRI(old) + NI。由上程序，进程默认的PRI是80，所以加上值为10的NI后，vi进程的PRI为90。 所以，需要注意的是，NI即niceness的值只是进程优先级的一部分，不能完全决定进程的优先级，但niceness值的绝对值越大，效果越显著。</p></blockquote><h2 id="参考链接">参考链接</h2><ul><li><p><a href="https://www.jianshu.com/p/fd3dec3cd393">Linux nice命令简要介绍</a></p></li><li><p><a href="https://www.runoob.com/linux/linux-comm-nice.html">Linux nice命令</a></p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Nice </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>视频协议中常见算法</title>
       <link href="/2021/08/17/%E8%A7%86%E9%A2%91%E5%8D%8F%E8%AE%AE%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/"/>
       <url>/2021/08/17/%E8%A7%86%E9%A2%91%E5%8D%8F%E8%AE%AE%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/</url>
