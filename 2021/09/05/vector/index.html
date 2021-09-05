@@ -1,0 +1,67 @@
+<!DOCTYPE html><html class="appearance-auto" lang="zh-CN"><head><meta charset="UTF-8"><title>vector</title><meta name="description" content="study hungry, study foolish"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><script type="text/javascript" id="maid-script" src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js?v=undefined"><script>if (window.mermaid) {
+  var options = JSON.parse(document.getElementById('maid-script').getAttribute('mermaidoptioins'));
+  mermaid.initialize(options);
+}
+</script></script><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="​	记录几个 vecotor 易混淆的几个API用法。
+
+reserve 和 resize
+
+reserve增加了vector的capacity，但是它的size没有改变。reserve是容器预留空间，但在空间内不真正创建元素对象，所以在没有添加新的对象之前，不能引用容器内的元素。加入新的元素时，要调用push_back()/insert()函数。
+resize改变了vector的capacity同时也增加了它的size。resize是改变容器的大小，且在创建对象，因此，调用这个函数之后，就可以引用容器内的对象了，因此当加入新的元素时，用operator[]操作符，或者用迭代器来引用元素对象。此时再调用push_back()函数，是加在这个新的空间后面的。
+如果reserve(n)函数的n的大小比vecto.."><meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="study hungry,study foolish" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">未知数的博客</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">vector</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#reserve-%E5%92%8C-resize"><span class="toc-text">reserve 和 resize</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#clear"><span class="toc-text">clear</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#emplace-back-%E5%92%8C-push-back"><span class="toc-text">emplace_back 和 push_back</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-text">参考链接</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/vector"><i class="tag post-item-tag">vector</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">vector</h1><time class="has-text-grey" datetime="2021-09-05T13:49:06.000Z">2021-09-05</time><article class="mt-2 post-content"><p>​	记录几个 <code>vecotor</code> 易混淆的几个API用法。</p>
+<span id="more"></span>
+<h2 id="reserve-和-resize"><code>reserve</code> 和 <code>resize</code></h2>
+<ul>
+<li><code>reserve</code>增加了<code>vector</code>的<code>capacity</code>，但是它的<code>size</code>没有改变。<code>reserve</code>是容器预留空间，但在空间内不真正创建元素对象，所以在没有添加新的对象之前，不能引用容器内的元素。加入新的元素时，要调用<code>push_back()</code>/<code>insert()</code>函数。</li>
+<li><code>resize</code>改变了<code>vector</code>的<code>capacity</code>同时也增加了它的<code>size</code>。<code>resize</code>是改变容器的大小，且在创建对象，因此，调用这个函数之后，就可以引用容器内的对象了，因此当加入新的元素时，用<code>operator[]</code>操作符，或者用迭代器来引用元素对象。此时再调用<code>push_back()</code>函数，是加在这个新的空间后面的。</li>
+<li>如果<code>reserve(n)</code>函数的<code>n</code>的大小比<code>vector</code>原来的容量小。<code>capacity</code>没有变化。<code>size</code>也没有变：</li>
+<li>如果<code>resize(n)</code>函数的<code>n</code>比<code>vector</code>原来的<code>size</code>小，结果是<code>size</code>减小到<code>n</code>，然后删除<code>n</code>之后的数据。</li>
+</ul>
+<pre><code class="language-c++">vector&lt;int&gt; myVec;
+myVec.reserve(100);     // 新元素还没有构造,
+                        // 此时不能用[]访问元素
+for (int i = 0; i &lt; 100; i++)
+{
+     myVec.push_back(i); //新元素这时才构造
+}
+myVec.resize(102);      // 用元素的默认构造函数构造了两个新的元素
+myVec[100] = 1;         // 直接操作新元素
+myVec[101] = 2; 
+</code></pre>
+<hr>
+<h2 id="clear"><code>clear</code></h2>
+<ul>
+<li>
+<p><code>clear</code> 函数不会释放内存，即改变 <code>capacity</code>，只会将<code>size</code>改为0</p>
+</li>
+<li>
+<p>用<code>swap</code>来帮助释放内存</p>
+<pre><code class="language-c++">vector&lt;int&gt; nums; 
+nums.push_back(1);
+nums.push_back(1);
+nums.push_back(2);
+nums.push_back(2); 
+vector&lt;int&gt;().swap(nums); //或者 nums.swap(vector&lt;int&gt;())
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="emplace-back-和-push-back"><code>emplace_back</code> 和 <code>push_back</code></h2>
+<ul>
+<li><code>emplace_back</code>可以原地构造对象，然后加入到容器中，可以减少一次拷贝或构造</li>
+<li><code>push_back</code>向容器中加入一个右值元素（临时对象）的时候，首先会调用<strong>构造函数</strong>构造这个临时对象，然后优先选择调用<strong>移动构造函数</strong>，如果没有才会调用<strong>拷贝构造函数</strong>临时对象放入容器中。原来的临时变量释放。这样造成的问题是临时变量申请的资源就浪费。</li>
+<li><code>emplace_back</code>函数要比<code>push_back</code>函数要快一倍</li>
+</ul>
+<hr>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38314865/article/details/118068565">https://blog.csdn.net/weixin_38314865/article/details/118068565</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/qlee/archive/2011/05/16/2048026.html">https://www.cnblogs.com/qlee/archive/2011/05/16/2048026.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/acoolgiser/article/details/81018296">https://blog.csdn.net/acoolgiser/article/details/81018296</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/hyl999/article/details/106235821">https://blog.csdn.net/hyl999/article/details/106235821</a></li>
+</ul>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2021/08/25/preempt_count/" title="preempt_count"><span class="has-text-weight-semibold">下一页: preempt_count</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> 未知数 2021</span></p><!--div.is-flex.is-justify-content-center.is-flex-wrap-wrap--><!--  p Powered by Hexo &verbar;&nbsp;--><!--  p.is-flex.is-justify-content-center--><!--    a(title="Hexo theme author" href='//github.com/haojen') Theme by Haojen&nbsp;--><!--  div(style="margin-top: 2px")--><!--    a(title="github-button" class="github-button" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true")--><!--div--><!--  span!= theme.user && theme.user.footnotes--></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script></body></html>
