@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>ffmpeg学习：window环境搭建</title>
+      <link href="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+      <url>/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+      
+        <content type="html"><![CDATA[<p>​ffmpeg vs2019 环境搭建方法。</p><span id="more"></span><h2 id="将依赖的dll拷贝到工程根目录">将依赖的dll拷贝到工程根目录</h2><pre><code class="language-c">├─ffmpeg_lib_dll  // 此目录存放已经编译好的ffmpeg二进制文件和头文件│  ├─bin│  │  ├─win32 // ffmpeg dll│  │  └─win64│  ├─include // 头文件│  │  ├─libavcodec│  │  ├─libavdevice│  │  ├─libavfilter│  │  ├─libavformat│  │  ├─libavutil│  │  ├─libpostproc│  │  ├─libswresample│  │  └─libswscale│  ├─lib│  │  ├─win32 // ffmpeg lib│  │  └─win64│  └─src│      └─TestFFMpeg│          └─x64│              └─Debug│                  └─TestFFMpeg.tlog└─source    └─helloword // 把ffmpeg dll文件拷贝到此文件夹下        └─Debug            └─helloword.tlog</code></pre><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907004445908.png" alt="image-20210907004445908"></p><hr><h2 id="配置附加目录（C-C-、链接器）">配置附加目录（C/C++、链接器）</h2><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907003555086.png" alt="image-20210907003555086"></p><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907003809294.png" alt="image-20210907003809294"></p><hr><h2 id="FFmpeg-第一个-Hello-Word">FFmpeg 第一个 Hello Word</h2><pre><code class="language-c++">#include &lt;stdio.h&gt;extern "C" {#include &lt;libavcodec/avcodec.h&gt;}#pragma comment(lib, "avcodec.lib")int main(){printf("%s\n", avcodec_configuration());return 0;}</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> ffmpeg </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ffmpeg </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>vector</title>
       <link href="/2021/09/05/vector/"/>
       <url>/2021/09/05/vector/</url>

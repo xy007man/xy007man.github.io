@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-09-05T15:09:15.744Z</updated>
+  <updated>2021-09-06T16:47:41.561Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ffmpeg学习：window环境搭建</title>
+    <link href="http://example.com/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>http://example.com/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</id>
+    <published>2021-09-06T16:33:52.000Z</published>
+    <updated>2021-09-06T16:47:41.561Z</updated>
+    
+    <content type="html"><![CDATA[<p>​ffmpeg vs2019 环境搭建方法。</p><span id="more"></span><h2 id="将依赖的dll拷贝到工程根目录">将依赖的dll拷贝到工程根目录</h2><pre><code class="language-c">├─ffmpeg_lib_dll  // 此目录存放已经编译好的ffmpeg二进制文件和头文件│  ├─bin│  │  ├─win32 // ffmpeg dll│  │  └─win64│  ├─include // 头文件│  │  ├─libavcodec│  │  ├─libavdevice│  │  ├─libavfilter│  │  ├─libavformat│  │  ├─libavutil│  │  ├─libpostproc│  │  ├─libswresample│  │  └─libswscale│  ├─lib│  │  ├─win32 // ffmpeg lib│  │  └─win64│  └─src│      └─TestFFMpeg│          └─x64│              └─Debug│                  └─TestFFMpeg.tlog└─source    └─helloword // 把ffmpeg dll文件拷贝到此文件夹下        └─Debug            └─helloword.tlog</code></pre><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907004445908.png" alt="image-20210907004445908"></p><hr><h2 id="配置附加目录（C-C-、链接器）">配置附加目录（C/C++、链接器）</h2><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907003555086.png" alt="image-20210907003555086"></p><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907003809294.png" alt="image-20210907003809294"></p><hr><h2 id="FFmpeg-第一个-Hello-Word">FFmpeg 第一个 Hello Word</h2><pre><code class="language-c++">#include &lt;stdio.h&gt;extern "C" {#include &lt;libavcodec/avcodec.h&gt;}#pragma comment(lib, "avcodec.lib")int main(){printf("%s\n", avcodec_configuration());return 0;}</code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;​	ffmpeg vs2019 环境搭建方法。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ffmpeg" scheme="http://example.com/categories/ffmpeg/"/>
+    
+    
+    <category term="ffmpeg" scheme="http://example.com/tags/ffmpeg/"/>
+    
+  </entry>
   
   <entry>
     <title>vector</title>
@@ -499,31 +520,6 @@ A[字符设备驱动框架]--&amp;gt;B1[驱动初始化]
     
     
     <category term="问题定位" scheme="http://example.com/tags/%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>反向代理和正向代理</title>
-    <link href="http://example.com/2021/06/21/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/"/>
-    <id>http://example.com/2021/06/21/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/</id>
-    <published>2021-06-21T14:28:04.000Z</published>
-    <updated>2021-08-06T14:41:23.118Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="代理">代理</h2><p>​代理其实就是一个中介，A和B本来可以直连，中间插入一个C，C就是中介。刚开始的时候，代理多数是帮助内网client访问外网server用的后来出现了反向代理，"反向"这个词在这儿的意思其实是指方向相反，即代理将来自外网客户端的请求转发到内网服务器，从外到内。</p><hr><h2 id="正向代理">正向代理</h2><p>​正向代理类似一个跳板机，代理访问外部资源比如我们国内访问谷歌，直接访问访问不到，我们可以通过一个正向代理服务器，请求发到代理服，代理服务器能够访问谷歌，这样由代理去谷歌取到返回数据，再返回给我们，这样我们就能访问谷歌了。</p><p><img src="/2021/06/21/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86.png" alt="正向代理"></p><p><strong>正向代理的用途：</strong></p><ul><li><p>访问原来无法访问的资源，如google</p></li><li><p>可以做缓存，加速访问资源</p></li><li><p>对客户端访问授权，上网进行认证</p></li><li><p>代理可以记录用户访问记录（上网行为管理），对外隐藏用户信息</p></li></ul><hr><h2 id="反向代理">反向代理</h2><p>​反向代理（Reverse Proxy）实际运行方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个服务器。反向代理一般就是指Nginx，是在主服务器之外加一层代理服务器，用户的请求会发送到代理服务器上，由代理服务器请求真正的服务器，获得到结果后再将结果返回给用户。</p><p><img src="/2021/06/21/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86.png" alt="反向代理"></p><p><strong>反向代理的作用：</strong></p><ul><li><p>保证内网的安全，阻止web攻击，大型网站，通常将反向代理作为公网访问地址，Web服务器是内网</p></li><li><p>负载均衡，通过反向代理服务器来优化网站的负载</p></li></ul><hr><h2 id="CDN">CDN</h2><p>​CDN是内容分发网络（Content Delivery Network）。是为了解决用户请求响应过慢的问题。比如用户在黑龙江，服务器在海南，用户请求的速度可能受距离、带宽的影响。CDN将几台机器分发在全国各地，用户发出的请求会选择就近的CDN服务器进行处理。CDN简单的来说就是存储一些静态文件的一台或多台服务器，通过复制，缓存主服务器等方式，将文件保存其中。</p><p><img src="/2021/06/21/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/CDN.jpg" alt="CDN"></p><p><strong>CDN作用：</strong></p><ul><li>CDN作用和反向代理相同，一方面加快用户访问速度，另一方面也减轻了后端服务器的负载压力</li></ul><p><strong>CDN和反向代理的区别：</strong></p><ul><li>CDN和反向代理的基本原理都是缓存，区别在于CDN部署在网络提供商的机房，使用户在请求网站服务时，可以从距离自己最近的网络提供商机房获取数据。</li><li>反向代理则部署在网站的中心机房，当用户请求到达中心机房后，首先访问的服务器反向代理服务器，如果反向代理服务器中缓存着用户请求的资源，就将其直接返回给用户。</li></ul><hr><h2 id="应用">应用</h2><p><strong>正向代理</strong>：</p><ul><li><p>许多科学上网的软件如SS、SSR、v2ray原理上都是正向代理，可以参考：</p><p><a href="https://github.com/xiaoming2028/FreePAC">v2ray搭建教程</a><br><a href="https://github.com/233boy/v2ray">v2ray安装脚本</a></p></li></ul><p><strong>反向代理/CDN：</strong></p><ul><li><p><a href="https://www.cloudflare.com/zh-cn/">cloudfare</a> 是国外一家CDN服务商，对于个人用户提供了一些免费的服务，可以把自己的网址托管在 <code>cloudfare</code> 上，可以通过优选</p><p>IP选择最优的CDN服务器，<a href="https://github.com/badafans/better-cloudflare-ip">优选IP可以参考这个github工程</a></p></li><li><p><a href="https://www.cloudflare.com/zh-cn/">cloudfare</a> 提供了worker反向代理功能，可以自定义添加worker，提供一个提升科学上网速度的脚本</p><pre><code class="language-js">addEventListener('fetch',event =&gt; {  let url=new URL(event.request.url);  url.hostname='xxxx.xx'; // v2ray服务器的伪装网址  let request=new Request(url,event.request);  event.respondWith(    fetch(request)  )})</code></pre></li></ul><hr><h2 id="参考链接">参考链接</h2><ul><li><p><a href="https://www.cnblogs.com/taostaryu/p/10547132.html">https://www.cnblogs.com/taostaryu/p/10547132.html</a></p></li><li><p><a href="https://www.pianshen.com/article/9900131597/">https://www.pianshen.com/article/9900131597/</a></p></li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;代理&quot;&gt;代理&lt;/h2&gt;
-&lt;p&gt;​	代理其实就是一个中介，A和B本来可以直连，中间插入一个C，C就是中介。刚开始的时候，代理多数是帮助内网client访问外网server用的后来出现了反向代理，&quot;反向&quot;这个词在这儿的意思其实是指方向相反，即代理将来自外网客户端的请求</summary>
-      
-    
-    
-    
-    <category term="网络" scheme="http://example.com/categories/%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="代理" scheme="http://example.com/tags/%E4%BB%A3%E7%90%86/"/>
     
   </entry>
   
