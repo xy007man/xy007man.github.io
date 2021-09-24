@@ -4,11 +4,61 @@
   
     
     <entry>
+      <title>记录一道面试题</title>
+      <link href="/2021/09/24/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+      <url>/2021/09/24/%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h2 id="题目描述">题目描述</h2><p>​用C++实现一个String类，做成共享库，并通过googletest做单元测试，编写测试用例，要求使用CMakeLists组织整个工程。String类应包含一个成员变量char* m_data和以下函数：</p><ul><li><p>默认构造函数</p></li><li><p>构造函数，参数为const char*</p></li><li><p>复制构造</p></li><li><p>移动构造</p></li><li><p>析构</p></li><li><p>等号重载</p></li><li><p>+=重载，实现追加String类，即追加字符串，例 String a = “abc”, b= “def”; a += b; //a = “abcdef”</p></li><li><p>反转字符串</p></li><li><p>以某个字符分割字符串，返回List<string>，例String a = “abc def g”; 输出为{“abc”, “def”, “g”}</string></p></li></ul><p>​这个题目考察的是C++的基础能力和工程能力，做一下还蛮有意思的~~</p><hr><h2 id="目录结构">目录结构</h2><pre><code class="language-shell">└─string    │  CMakeLists.txt    │  readme.md    │    ├─3rd_party # gtest 依赖库和头文件    │  ├─gmock    │  │  │  gmock-actions.h    │  │  │  gmock-cardinalities.h    │  │  │  gmock-function-mocker.h    │  │  │  gmock-matchers.h    │  │  │  gmock-more-actions.h    │  │  │  gmock-more-matchers.h    │  │  │  gmock-nice-strict.h    │  │  │  gmock-spec-builders.h    │  │  │  gmock.h    │  │  │    │  │  └─internal    │  │      │  gmock-internal-utils.h    │  │      │  gmock-port.h    │  │      │  gmock-pp.h    │  │      │    │  │      └─custom    │  │              gmock-generated-actions.h    │  │              gmock-matchers.h    │  │              gmock-port.h    │  │              README.md    │  │    │  ├─gtest    │  │  │  gtest-death-test.h    │  │  │  gtest-matchers.h    │  │  │  gtest-message.h    │  │  │  gtest-param-test.h    │  │  │  gtest-printers.h    │  │  │  gtest-spi.h    │  │  │  gtest-test-part.h    │  │  │  gtest-typed-test.h    │  │  │  gtest.h    │  │  │  gtest_pred_impl.h    │  │  │  gtest_prod.h    │  │  │    │  │  └─internal    │  │      │  gtest-death-test-internal.h    │  │      │  gtest-filepath.h    │  │      │  gtest-internal.h    │  │      │  gtest-param-util.h    │  │      │  gtest-port-arch.h    │  │      │  gtest-port.h    │  │      │  gtest-string.h    │  │      │  gtest-type-util.h    │  │      │    │  │      └─custom    │  │              gtest-port.h    │  │              gtest-printers.h    │  │              gtest.h    │  │              README.md    │  │    │  └─lib    │          libgmock.a    │          libgmock_main.a    │          libgtest.a    │          libgtest_main.a    │    ├─app # 测试二进制存放路径    │      test    │    ├─build    ├─inc # String 共享库对外提供的头文件    │      String.h    │    ├─lib # String 共享库存放路径    │      libstring.so    │    ├─src # String 类的实现    │      CMakeLists.txt    │      String.cpp    │    └─test # gtest 测试目录            CMakeLists.txt            gtest.cpp            main.cpp</code></pre><hr><h2 id="工程编译方法">工程编译方法</h2><pre><code class="language-shell">cd build # 进入工程根目录下build目录cmake ..make../app/test # 执行app目录下可执行文件</code></pre><hr><h2 id="调试环境">调试环境</h2><ul><li>cmake version 3.16.3</li><li>Linux version 5.11.0-34-generic</li><li>gcc 9.3.0</li><li>ubuntu 20.04.1</li></ul><hr><h2 id="GitHub链接">GitHub链接</h2><ul><li><a href="https://github.com/xy007man/string">https://github.com/xy007man/string</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> C/C++ </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 面试题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ffmpeg学习：window环境搭建</title>
       <link href="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
       <url>/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
       
         <content type="html"><![CDATA[<p>​ffmpeg vs2019 环境搭建方法。</p><span id="more"></span><h2 id="将依赖的dll拷贝到工程根目录">将依赖的dll拷贝到工程根目录</h2><pre><code class="language-c">├─ffmpeg_lib_dll  // 此目录存放已经编译好的ffmpeg二进制文件和头文件│  ├─bin│  │  ├─win32 // ffmpeg dll│  │  └─win64│  ├─include // 头文件│  │  ├─libavcodec│  │  ├─libavdevice│  │  ├─libavfilter│  │  ├─libavformat│  │  ├─libavutil│  │  ├─libpostproc│  │  ├─libswresample│  │  └─libswscale│  ├─lib│  │  ├─win32 // ffmpeg lib│  │  └─win64│  └─src│      └─TestFFMpeg│          └─x64│              └─Debug│                  └─TestFFMpeg.tlog└─source    └─helloword // 把ffmpeg dll文件拷贝到此文件夹下        └─Debug            └─helloword.tlog</code></pre><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907004445908.png" alt="image-20210907004445908"></p><hr><h2 id="配置附加目录（C-C-、链接器）">配置附加目录（C/C++、链接器）</h2><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907003555086.png" alt="image-20210907003555086"></p><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907003809294.png" alt="image-20210907003809294"></p><hr><h2 id="FFmpeg-第一个-Hello-Word">FFmpeg 第一个 Hello Word</h2><pre><code class="language-c++">#include &lt;stdio.h&gt;extern "C" {#include &lt;libavcodec/avcodec.h&gt;}#pragma comment(lib, "avcodec.lib")int main(){printf("%s\n", avcodec_configuration());return 0;}</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> ffmpeg </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ffmpeg </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>ffmpeg学习：实现一个简单解码器</title>
+      <link href="/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/"/>
+      <url>/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/</url>
+      
+        <content type="html"><![CDATA[<p>​一个简单的解码MP4文件的ffmpeg解码器。</p><span id="more"></span><h2 id="FFmpeg-基本流程图">FFmpeg 基本流程图</h2><p><img src="/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/image-20210907232217743.png" alt="image-20210907232217743"></p><hr><h2 id="FFmpeg-层次结构">FFmpeg 层次结构</h2><p><img src="/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/image-20210907232400006.png" alt="image-20210907232400006"></p><hr><h2 id="简单的解码器实现代码">简单的解码器实现代码</h2><pre><code class="language-c++"></code></pre>]]></content>
       
       
       <categories>
@@ -38,7 +88,7 @@
       
       <categories>
           
-          <category> c++ </category>
+          <category> C/C++ </category>
           
       </categories>
       

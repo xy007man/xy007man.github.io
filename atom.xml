@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-09-06T16:47:41.561Z</updated>
+  <updated>2021-09-24T12:54:15.386Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>记录一道面试题</title>
+    <link href="http://example.com/2021/09/24/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://example.com/2021/09/24/%E9%9D%A2%E8%AF%95%E9%A2%98/</id>
+    <published>2021-09-24T12:54:12.000Z</published>
+    <updated>2021-09-24T12:54:15.386Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="题目描述">题目描述</h2><p>​用C++实现一个String类，做成共享库，并通过googletest做单元测试，编写测试用例，要求使用CMakeLists组织整个工程。String类应包含一个成员变量char* m_data和以下函数：</p><ul><li><p>默认构造函数</p></li><li><p>构造函数，参数为const char*</p></li><li><p>复制构造</p></li><li><p>移动构造</p></li><li><p>析构</p></li><li><p>等号重载</p></li><li><p>+=重载，实现追加String类，即追加字符串，例 String a = “abc”, b= “def”; a += b; //a = “abcdef”</p></li><li><p>反转字符串</p></li><li><p>以某个字符分割字符串，返回List<string>，例String a = “abc def g”; 输出为{“abc”, “def”, “g”}</string></p></li></ul><p>​这个题目考察的是C++的基础能力和工程能力，做一下还蛮有意思的~~</p><hr><h2 id="目录结构">目录结构</h2><pre><code class="language-shell">└─string    │  CMakeLists.txt    │  readme.md    │    ├─3rd_party # gtest 依赖库和头文件    │  ├─gmock    │  │  │  gmock-actions.h    │  │  │  gmock-cardinalities.h    │  │  │  gmock-function-mocker.h    │  │  │  gmock-matchers.h    │  │  │  gmock-more-actions.h    │  │  │  gmock-more-matchers.h    │  │  │  gmock-nice-strict.h    │  │  │  gmock-spec-builders.h    │  │  │  gmock.h    │  │  │    │  │  └─internal    │  │      │  gmock-internal-utils.h    │  │      │  gmock-port.h    │  │      │  gmock-pp.h    │  │      │    │  │      └─custom    │  │              gmock-generated-actions.h    │  │              gmock-matchers.h    │  │              gmock-port.h    │  │              README.md    │  │    │  ├─gtest    │  │  │  gtest-death-test.h    │  │  │  gtest-matchers.h    │  │  │  gtest-message.h    │  │  │  gtest-param-test.h    │  │  │  gtest-printers.h    │  │  │  gtest-spi.h    │  │  │  gtest-test-part.h    │  │  │  gtest-typed-test.h    │  │  │  gtest.h    │  │  │  gtest_pred_impl.h    │  │  │  gtest_prod.h    │  │  │    │  │  └─internal    │  │      │  gtest-death-test-internal.h    │  │      │  gtest-filepath.h    │  │      │  gtest-internal.h    │  │      │  gtest-param-util.h    │  │      │  gtest-port-arch.h    │  │      │  gtest-port.h    │  │      │  gtest-string.h    │  │      │  gtest-type-util.h    │  │      │    │  │      └─custom    │  │              gtest-port.h    │  │              gtest-printers.h    │  │              gtest.h    │  │              README.md    │  │    │  └─lib    │          libgmock.a    │          libgmock_main.a    │          libgtest.a    │          libgtest_main.a    │    ├─app # 测试二进制存放路径    │      test    │    ├─build    ├─inc # String 共享库对外提供的头文件    │      String.h    │    ├─lib # String 共享库存放路径    │      libstring.so    │    ├─src # String 类的实现    │      CMakeLists.txt    │      String.cpp    │    └─test # gtest 测试目录            CMakeLists.txt            gtest.cpp            main.cpp</code></pre><hr><h2 id="工程编译方法">工程编译方法</h2><pre><code class="language-shell">cd build # 进入工程根目录下build目录cmake ..make../app/test # 执行app目录下可执行文件</code></pre><hr><h2 id="调试环境">调试环境</h2><ul><li>cmake version 3.16.3</li><li>Linux version 5.11.0-34-generic</li><li>gcc 9.3.0</li><li>ubuntu 20.04.1</li></ul><hr><h2 id="GitHub链接">GitHub链接</h2><ul><li><a href="https://github.com/xy007man/string">https://github.com/xy007man/string</a></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;题目描述&quot;&gt;题目描述&lt;/h2&gt;
+&lt;p&gt;​	用C++实现一个String类，做成共享库，并通过googletest做单元测试，编写测试用例，要求使用CMakeLists组织整个工程。String类应包含一个成员变量char* m_data和以下函数：&lt;/p&gt;
+&lt;ul</summary>
+      
+    
+    
+    
+    <category term="C/C++" scheme="http://example.com/categories/C-C/"/>
+    
+    
+    <category term="面试题" scheme="http://example.com/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title>ffmpeg学习：window环境搭建</title>
@@ -38,11 +64,32 @@
   </entry>
   
   <entry>
+    <title>ffmpeg学习：实现一个简单解码器</title>
+    <link href="http://example.com/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/"/>
+    <id>http://example.com/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/</id>
+    <published>2021-09-06T16:33:52.000Z</published>
+    <updated>2021-09-07T15:25:16.705Z</updated>
+    
+    <content type="html"><![CDATA[<p>​一个简单的解码MP4文件的ffmpeg解码器。</p><span id="more"></span><h2 id="FFmpeg-基本流程图">FFmpeg 基本流程图</h2><p><img src="/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/image-20210907232217743.png" alt="image-20210907232217743"></p><hr><h2 id="FFmpeg-层次结构">FFmpeg 层次结构</h2><p><img src="/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/image-20210907232400006.png" alt="image-20210907232400006"></p><hr><h2 id="简单的解码器实现代码">简单的解码器实现代码</h2><pre><code class="language-c++"></code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;​	一个简单的解码MP4文件的ffmpeg解码器。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ffmpeg" scheme="http://example.com/categories/ffmpeg/"/>
+    
+    
+    <category term="ffmpeg" scheme="http://example.com/tags/ffmpeg/"/>
+    
+  </entry>
+  
+  <entry>
     <title>vector</title>
     <link href="http://example.com/2021/09/05/vector/"/>
     <id>http://example.com/2021/09/05/vector/</id>
     <published>2021-09-05T13:49:06.000Z</published>
-    <updated>2021-09-05T15:09:15.744Z</updated>
+    <updated>2021-09-24T12:44:59.521Z</updated>
     
     <content type="html"><![CDATA[<p>​记录几个 <code>vecotor</code> 易混淆的几个API用法。</p><span id="more"></span><h2 id="reserve-和-resize"><code>reserve</code> 和 <code>resize</code></h2><ul><li><code>reserve</code>增加了<code>vector</code>的<code>capacity</code>，但是它的<code>size</code>没有改变。<code>reserve</code>是容器预留空间，但在空间内不真正创建元素对象，所以在没有添加新的对象之前，不能引用容器内的元素。加入新的元素时，要调用<code>push_back()</code>/<code>insert()</code>函数。</li><li><code>resize</code>改变了<code>vector</code>的<code>capacity</code>同时也增加了它的<code>size</code>。<code>resize</code>是改变容器的大小，且在创建对象，因此，调用这个函数之后，就可以引用容器内的对象了，因此当加入新的元素时，用<code>operator[]</code>操作符，或者用迭代器来引用元素对象。此时再调用<code>push_back()</code>函数，是加在这个新的空间后面的。</li><li>如果<code>reserve(n)</code>函数的<code>n</code>的大小比<code>vector</code>原来的容量小。<code>capacity</code>没有变化。<code>size</code>也没有变：</li><li>如果<code>resize(n)</code>函数的<code>n</code>比<code>vector</code>原来的<code>size</code>小，结果是<code>size</code>减小到<code>n</code>，然后删除<code>n</code>之后的数据。</li></ul><pre><code class="language-c++">vector&lt;int&gt; myVec;myVec.reserve(100);     // 新元素还没有构造,                        // 此时不能用[]访问元素for (int i = 0; i &lt; 100; i++){     myVec.push_back(i); //新元素这时才构造}myVec.resize(102);      // 用元素的默认构造函数构造了两个新的元素myVec[100] = 1;         // 直接操作新元素myVec[101] = 2; </code></pre><hr><h2 id="clear"><code>clear</code></h2><ul><li><p><code>clear</code> 函数不会释放内存，即改变 <code>capacity</code>，只会将<code>size</code>改为0</p></li><li><p>用<code>swap</code>来帮助释放内存</p><pre><code class="language-c++">vector&lt;int&gt; nums; nums.push_back(1);nums.push_back(1);nums.push_back(2);nums.push_back(2); vector&lt;int&gt;().swap(nums); //或者 nums.swap(vector&lt;int&gt;())</code></pre></li></ul><hr><h2 id="emplace-back-和-push-back"><code>emplace_back</code> 和 <code>push_back</code></h2><ul><li><code>emplace_back</code>可以原地构造对象，然后加入到容器中，可以减少一次拷贝或构造</li><li><code>push_back</code>向容器中加入一个右值元素（临时对象）的时候，首先会调用<strong>构造函数</strong>构造这个临时对象，然后优先选择调用<strong>移动构造函数</strong>，如果没有才会调用<strong>拷贝构造函数</strong>临时对象放入容器中。原来的临时变量释放。这样造成的问题是临时变量申请的资源就浪费。</li><li><code>emplace_back</code>函数要比<code>push_back</code>函数要快一倍</li></ul><hr><h2 id="参考链接">参考链接</h2><ul><li><a href="https://blog.csdn.net/weixin_38314865/article/details/118068565">https://blog.csdn.net/weixin_38314865/article/details/118068565</a></li><li><a href="https://www.cnblogs.com/qlee/archive/2011/05/16/2048026.html">https://www.cnblogs.com/qlee/archive/2011/05/16/2048026.html</a></li><li><a href="https://blog.csdn.net/acoolgiser/article/details/81018296">https://blog.csdn.net/acoolgiser/article/details/81018296</a></li><li><a href="https://blog.csdn.net/hyl999/article/details/106235821">https://blog.csdn.net/hyl999/article/details/106235821</a></li></ul>]]></content>
     
@@ -51,7 +98,7 @@
     
     
     
-    <category term="c++" scheme="http://example.com/categories/c/"/>
+    <category term="C/C++" scheme="http://example.com/categories/C-C/"/>
     
     
     <category term="vector" scheme="http://example.com/tags/vector/"/>
@@ -473,53 +520,6 @@ A[字符设备驱动框架]--&amp;gt;B1[驱动初始化]
     
     
     <category term="驱动" scheme="http://example.com/tags/%E9%A9%B1%E5%8A%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>人机对弈</title>
-    <link href="http://example.com/2021/06/26/%E4%BA%BA%E6%9C%BA%E5%AF%B9%E5%BC%88/"/>
-    <id>http://example.com/2021/06/26/%E4%BA%BA%E6%9C%BA%E5%AF%B9%E5%BC%88/</id>
-    <published>2021-06-26T13:29:06.000Z</published>
-    <updated>2021-08-06T14:41:52.268Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="背景">背景</h2><p>​小时候在FC上玩过象棋游戏，印象最深的就是那个老头，每次走棋贼慢同时棋力也特高。一直想了解下人机对弈的算法，看了几篇文章后，发现基本的套路都是一样的，自己写了一个小时候玩的<code>两口吃一口</code>的小游戏。</p><img src="/2021/06/26/%E4%BA%BA%E6%9C%BA%E5%AF%B9%E5%BC%88/FC象棋.jpg" alt="FC象棋" style="zoom:50%;"><hr><h2 id="棋类AI基本步骤-以下都是基于两口吃一口这个小游戏">棋类AI基本步骤(以下都是基于<code>两口吃一口</code>这个小游戏)</h2><ul><li><p><strong>局面生成</strong>：棋子种类、开局位置</p><pre><code class="language-c++">// 5x5 棋盘，黑方和白方初始时都有5颗棋子/*  0 1 2 3 4 ┌─────────┐0│○─○─○─○─○│1│├─┼─┼─┼─┤│2│├─┼─┼─┼─┤│3│├─┼─┼─┼─┤│4│●─●─●─●─●│ └─────────┘ */std::string GenBoard(int row, int col, int colNum, int rowNum, std::map&lt;std::pair&lt;int, int&gt;, int&gt; board){std::string str;auto it = board.find(std::make_pair(row, col));if (it != board.end()) {if (it-&gt;second == WHITE) {return "○";}if (it-&gt;second == BLACK) {return "●";}}if (row == 0 &amp;&amp; col == 0) {str = "┌";}else if (row == 0 &amp;&amp; col == colNum - 1) {str = "┐";}else if (row == rowNum - 1 &amp;&amp; col == 0) {str = "└";}else if (row == rowNum - 1 &amp;&amp; col == colNum - 1) {str = "┘";}else if (row == 0) {str = "┬";}else if (col == colNum - 1) {str = "┤";}else if (col == 0) {str = "├";}else if (row == rowNum - 1) {str = "┴";}else {str = "┼";}return str;}// 棋盘绘制void DrawBoard(){std::string posCol;std::string topBorderLine;std::string bottomBorderLine;posCol += "  ";for (int i = 0; i &lt; g_colNum; i++) {posCol += std::to_string(i) + " ";}GenBorderLine(topBorderLine, bottomBorderLine, g_colNum);std::cout &lt;&lt; posCol &lt;&lt; std::endl;std::cout &lt;&lt; topBorderLine &lt;&lt; std::endl;for (int rowIdx = 0; rowIdx &lt; g_rowNum; rowIdx++) {std::cout &lt;&lt; std::to_string(rowIdx) &lt;&lt; "│";for (int colIdx = 0; colIdx &lt; g_colNum; colIdx++) {std::cout &lt;&lt; GenBoard(rowIdx, colIdx, g_rowNum, g_colNum, g_board);if (colIdx != g_colNum - 1) {std::cout &lt;&lt; "─";}}std::cout &lt;&lt; "│" &lt;&lt; std::endl;}std::cout &lt;&lt; bottomBorderLine &lt;&lt; std::endl;}</code></pre></li><li><p><strong>走法生成</strong>：走棋规则、吃子规则、胜利规则</p><pre><code class="language-c++">// 上下左右不超出棋盘并且目标位置没有棋子void GenMoveWays(int player, std::vector&lt;std::tuple&lt;int, int, int, int&gt;&gt;&amp; ways){int direct[4][2] = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} };for (auto &amp;i : g_board) {if (i.second != player) {continue;}for (int k = 0; k &lt; 4; k++) {int nextRow = i.first.first + direct[k][0];int nextCol = i.first.second + direct[k][1];if (CheckPostion(nextRow, nextCol)) {continue;}auto nextIt = g_board.find(std::make_pair(nextRow, nextCol));if (nextIt != g_board.end()) {continue;}ways.push_back(std::make_tuple(i.first.first, i.first.second, nextRow, nextCol));}}}/* 一行或者一列两个连续己方棋子可以吃对方一个棋子 _○○●_：OK ○○●__：OK __○○●：OK ○○●_●：这种情况不能吃子 ○○○●_：这种情况不能吃子 _○○○●：这种情况不能吃子 _●○○●：这种情况不能吃子 ●○○●_：这种情况不能吃子*/int GetPieceNumByDirect(int row, int col, int direct[2]){int pieceNum = 0;if (direct[0] != 0 &amp;&amp; direct[1] != 0) {std::cout &lt;&lt; "错误的方向" &lt;&lt; std::endl;assert(0);return 0;}if (direct[0] != 0) {for (int i = 0; i &lt; g_rowNum; i++) {auto it = g_board.find(std::make_pair(i, col));if (it != g_board.end()) {pieceNum++;}}return pieceNum;}for (int i = 0; i &lt; g_colNum; i++) {auto it = g_board.find(std::make_pair(row, i));if (it != g_board.end()) {pieceNum++;}}return pieceNum;}// 当前走棋方棋子数量小于2，则为失败（连续两个棋子才能吃对方一个棋子）bool IsCurrentPlayLose(){return GetPieceNum(g_currentPlayer) &lt; 2;}</code></pre></li><li><p><strong>局面评估</strong>：这部分其实是大多棋类AI的关键，别看我写的局面评估只有一个语句</p><pre><code class="language-c++">// 己方棋子越多，对自己越有利int EvaluatePosition(){return GetPieceNum(WHITE) - GetPieceNum(BLACK);}</code></pre></li><li><p><strong>局面搜索</strong>：搜索算法要和评估函数结合，通过好的剪枝算法会大大提高AI的智慧，我这里就是一个简单极大极小值深度优先搜索</p><pre><code class="language-c++">int GenOneStep(int fromRow, int fromCol, int toRow, int toCol, std::vector&lt;std::pair&lt;int, int&gt;&gt; &amp;eats){std::set&lt;std::tuple&lt;int, int, int, int&gt;&gt; ways;if (!IsVaildPiece(fromRow, fromCol, toRow, toCol, g_currentPlayer)) {return -1;}// 走一步棋DeletePiece(fromRow, fromCol, g_currentPlayer);AddPiece(toRow, toCol, g_currentPlayer);// 吃子EatPiece(toRow, toCol, g_currentPlayer, eats);// 交换走棋方ChangePlayer();//DrawBoard();return 0;}void UndoOneStep(int fromRow, int fromCol, int toRow, int toCol, std::vector&lt;std::pair&lt;int, int&gt;&gt;&amp; eats){// 还原被吃掉的对方棋子for (auto&amp; i : eats) {AddPiece(i.first, i.second, g_currentPlayer); // 当前走棋方为对方}eats.clear();// 交换走棋方ChangePlayer();// 撤销上一步棋DeletePiece(toRow, toCol, g_currentPlayer);AddPiece(fromRow, fromCol, g_currentPlayer);}int Search(int depth, int&amp; fromRow, int&amp; fromCol, int &amp;toRow, int &amp;toCol){int bestValue;int value;if (depth == 0) {return EvaluatePosition();}if (g_currentPlayer == BLACK) {bestValue = INFINITY_VALUE;  // bestValue越小对黑方越有利}else {bestValue = -INFINITY_VALUE; // bestValue越大对白方越有利}std::vector&lt;std::tuple&lt;int, int, int, int&gt;&gt; ways;std::vector&lt;std::pair&lt;int, int&gt;&gt; eats;GenMoveWays(g_currentPlayer, ways);for (auto&amp; i : ways) {if (GenOneStep(std::get&lt;0&gt;(i), std::get&lt;1&gt;(i), std::get&lt;2&gt;(i), std::get&lt;3&gt;(i), eats)) {continue;}value = Search(depth - 1, fromRow, fromCol, toRow, toCol);UndoOneStep(std::get&lt;0&gt;(i), std::get&lt;1&gt;(i), std::get&lt;2&gt;(i), std::get&lt;3&gt;(i), eats);if (g_currentPlayer == BLACK) {if (value &lt; bestValue) {bestValue = value;if (depth == MAX_SEARCH_DEPTH) {fromRow = std::get&lt;0&gt;(i);fromCol = std::get&lt;1&gt;(i);toRow = std::get&lt;2&gt;(i);toCol = std::get&lt;3&gt;(i);}}}else {if (value &gt; bestValue) {bestValue = value;if (depth == MAX_SEARCH_DEPTH) {fromRow = std::get&lt;0&gt;(i);fromCol = std::get&lt;1&gt;(i);toRow = std::get&lt;2&gt;(i);toCol = std::get&lt;3&gt;(i);}}}}// 当前方已经无棋可走了if (g_currentPlayer == BLACK &amp;&amp; bestValue == INFINITY_VALUE) {// 黑方value越小越好，即搜索深度越深到达无路可走越好return INFINITY_VALUE - (MAX_SEARCH_DEPTH - depth);}if (g_currentPlayer == WHITE &amp;&amp; bestValue == -INFINITY_VALUE) {return (MAX_SEARCH_DEPTH - depth) - INFINITY_VALUE;}return bestValue;}void ComputerOneStep(){int fromRow;int fromCol;int toRow; int toCol;std::vector&lt;std::pair&lt;int, int&gt;&gt; eats;Search(MAX_SEARCH_DEPTH, fromRow, fromCol, toRow, toCol);GenOneStep(fromRow, fromCol, toRow, toCol, eats);}</code></pre></li></ul><hr><h2 id="项目链接">项目链接</h2><p><a href="https://github.com/xy007man/2KouChiYiKou">https://github.com/xy007man/2KouChiYiKou</a></p><hr><h2 id="参考链接">参考链接</h2><ul><li><p><a href="https://www.zhihu.com/question/34816738">https://www.zhihu.com/question/34816738</a></p></li><li><p><a href="https://www.xqbase.com/computer.htm">https://www.xqbase.com/computer.htm</a></p></li><li><p><a href="https://www.zhihu.com/question/29472711/answer/45436565">https://www.zhihu.com/question/29472711/answer/45436565</a></p></li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;背景&quot;&gt;背景&lt;/h2&gt;
-&lt;p&gt;​	小时候在FC上玩过象棋游戏，印象最深的就是那个老头，每次走棋贼慢同时棋力也特高。一直想了解下人机对弈的算法，看了几篇文章后，发现基本的套路都是一样的，自己写了一个小时候玩的&lt;code&gt;两口吃一口&lt;/code&gt;的小游戏。&lt;/p&gt;
-&lt;</summary>
-      
-    
-    
-    
-    <category term="算法" scheme="http://example.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="极大极小值" scheme="http://example.com/tags/%E6%9E%81%E5%A4%A7%E6%9E%81%E5%B0%8F%E5%80%BC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>踩内存</title>
-    <link href="http://example.com/2021/06/22/%E8%B8%A9%E5%86%85%E5%AD%98/"/>
-    <id>http://example.com/2021/06/22/%E8%B8%A9%E5%86%85%E5%AD%98/</id>
-    <published>2021-06-22T13:38:06.000Z</published>
-    <updated>2021-08-07T13:05:47.929Z</updated>
-    
-    <content type="html"><![CDATA[<p>​对于C/C++程序员来说，踩内存问题是最难分析定位的，往往问题的源头都比较隐蔽，让人很难排查出问题的根源所在。</p><span id="more"></span><hr><h2 id="原因">原因</h2><ul><li><p>内存越界</p><ol><li><code>memset/memcpy/memmove</code> 等内存操作函数操作越界，使用这些函数时尽可能用 <code>memset_s/memcpy_s/memmove_s</code> 等安全函数替代。</li><li>内存越界的问题有个显著的特点，被踩的内存是连续的，遇到这种情况首先怀疑在被踩内存前面申请的内存的操作是否越界。</li></ol></li><li><p>数组越界/操作字符串越界</p><p>数组越界访问往往是最常见的踩内存原因，对于数组访问一定要先判断下标是否越界</p></li><li><p>野指针</p><ol><li>对于全局的变量在释放内存后一定要置为NULL，防止出现野指针</li><li>警惕浅拷贝潜在的野指针风险。浅拷贝只是拷贝了它在栈中存储的指针，它们指向的都是同一个堆内存地址，所以浅拷贝在某些情况会造成改变数据后导致别的另一份数据也同步被改变的情况；而深拷贝是直接将堆内存中存储的数据直接复制一份，不会有浅拷贝互相影响的问题。</li><li>某些时候查看 <code>coredump</code> 现场发现程序访问的地址非常小，首先怀疑空指针。因为结构体的基地址是0，程序在访问结构体成员时会进行若干字节的偏移，所以最终挂死的现场的地址非常小。</li></ol></li><li><p>多线程场景下，全局资源未作加锁保护</p><p>这种情况可能更加复杂，需要对代码进行深度检视</p></li></ul><hr><h2 id="常用定位手段">常用定位手段</h2><ul><li><p>使用系统提供的函数修改内存为只读属性，发生踩内存时程序会直接崩溃，查看相关 <code>coredump</code> 文件进行分析定位</p><ol><li><p>用户态进程：<code>mprotect</code></p><pre><code class="language-c">#include &lt;unistd.h&gt;#include &lt;sys/mmap.h&gt;int mprotect(const void *start, size_t len, int prot);</code></pre><p>函数使用方法参考：<a href="https://www.cnblogs.com/ims-/p/13222243.html">https://www.cnblogs.com/ims-/p/13222243.html</a></p></li><li><p>内核：<code>set_mem_rw</code></p><pre><code class="language-c">#include &lt;linux/kallsyms.h&gt;int set_mem_rw(unsigned long ,int)set_mem_rw = (void *)kallsyms_lookup_name("set_memory_rw"); // 这个函数内核并未导出，不能直接调用</code></pre></li></ol></li><li><p>valgrind 工具分析</p><p>valgrind是一个强大的内存管理工具，常用来检测内存泄漏和内存的非法使用</p><p>具体使用方法参考：<a href="https://blog.csdn.net/weixin_29666341/article/details/116637397">https://blog.csdn.net/weixin_29666341/article/details/116637397</a></p></li><li><p><code>GCC</code> 栈保护机制 <code>stack-protector</code></p><p>程序执行栈内存被踩，程序崩溃的位置是不确定的，为了使崩溃的地点更加接近问题点，可以在编译时加入相关编译选项</p><p>具体使用方法参考：<a href="https://www.cnblogs.com/arnoldlu/p/11630979.html">https://www.cnblogs.com/arnoldlu/p/11630979.html</a></p></li></ul>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;​	对于C/C++程序员来说，踩内存问题是最难分析定位的，往往问题的源头都比较隐蔽，让人很难排查出问题的根源所在。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Linux" scheme="http://example.com/categories/Linux/"/>
-    
-    
-    <category term="问题定位" scheme="http://example.com/tags/%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/"/>
     
   </entry>
   
