@@ -29,31 +29,6 @@
     
     
     <entry>
-      <title>微信小游戏桌球辅助器</title>
-      <link href="/2021/10/17/%E9%9D%A2%E8%AF%95%E9%A2%98%20-%20%E5%89%AF%E6%9C%AC/"/>
-      <url>/2021/10/17/%E9%9D%A2%E8%AF%95%E9%A2%98%20-%20%E5%89%AF%E6%9C%AC/</url>
-      
-        <content type="html"><![CDATA[<p>​最近在玩了一下微信小游戏中的桌球，游戏中自带的瞄准线太短了，就想找一个辅助器。在GitHub上搜索了半天没有发现特别好用的，GitHub上一般都是基于PC版的或者是需要用adb连接PC（晕，我玩个手机游戏还需要连着电脑？）。于是打算自己动手做一个。</p><h2 id="基本思路">基本思路</h2><ul><li><p>确定瞄准圆环的位置：将圆环的图片用抠图工具截取出来，使用opencv中的<code>matchTemplate</code>进行图像匹配（图中矩形）</p></li><li><p>确定瞄准线的坐标：使用深度优先算法，搜索瞄准圆环周边的白色像素坐标，然后取平均值，得到瞄准线的坐标（在图中两个圆环中间区域中搜索白色像素）</p></li><li><p>画出瞄准线：连接第一步确定的瞄准圆环圆心和第二步确定的瞄准线坐标画出瞄准线，另外需要注意的是我们画的是射线，需要通过这两点的相对位置，来确定射线的方向</p></li><li><p>在手机屏幕中显示出辅助线：利用android的的护眼模式的原理，创建一个透明的图层，覆盖在游戏上，绘制这个透明图层就能看到辅助线</p><p><img src="/2021/10/17/%E9%9D%A2%E8%AF%95%E9%A2%98%20-%20%E5%89%AF%E6%9C%AC/res.jpg" alt="res"></p></li></ul><h2 id="工程目录结构">工程目录结构</h2><ul><li>app主要负责屏幕截图、透明图层创建、绘制辅助线（本人不太了解android app开发，所以这部分代码只是勉强能用哈）</li><li>Billiards_SDK是JNI层，主要是进行瞄准圆环的匹配，确定辅助线坐标</li></ul><p><img src="/2021/10/17/%E9%9D%A2%E8%AF%95%E9%A2%98%20-%20%E5%89%AF%E6%9C%AC/image-20211017153332240.png" alt="image-20211017153332240"></p><hr><h2 id="辅助工具的使用">辅助工具的使用</h2><ul><li>apk打包在 <code>Tball\app\build\outputs\apk\debug\app-debug.apk</code>目录，push到手机中正常安装（第一次安装时需要悬浮权限、读取sdcard权限及录屏权限，依次允许就行）</li><li>将<code>Tball\app\build\outputs\apk\debug\app-debug.apk</code>目录下的<code>circle.jpg</code>图像文件push到手机<code>/sdcard/Pictures</code>文件夹下，用于匹配瞄准环（我的手机屏幕分辨率是1080x2400，所以不同分辨率的手机需要自行截取圆环图像进行替换）</li><li>打开Tball apk后，分别点击<code>启动Service</code>、<code>初始化服务</code>，然后将apk切换到后台，之后正常启动游戏即可（有的手机可能会误杀后台进程造成辅助失效，需要手动设置一下电源管理）</li></ul><hr><h2 id="本地运行环境">本地运行环境</h2><ul><li>手机：荣耀V30 pro</li><li>android 版本：Android 10</li></ul><hr><h2 id="GitHub链接">GitHub链接</h2><ul><li></li></ul><hr><h2 id="鸣谢（排名不分先后-）">鸣谢（排名不分先后~）</h2><ul><li><p>Android权限框架：<a href="https://github.com/getActivity/XXPermissions">https://github.com/getActivity/XXPermissions</a></p></li><li><p>MediaProjection 截屏、录屏Demo：<a href="https://github.com/jiashuaishuai/MediaProjectionDemo">https://github.com/jiashuaishuai/MediaProjectionDemo</a></p></li><li><p>自定义View之自动刷新View：<a href="https://blog.csdn.net/qq_16519957/article/details/88768025">https://blog.csdn.net/qq_16519957/article/details/88768025</a></p></li><li><p>Android如何实现全局的护眼模式：<a href="https://blog.csdn.net/weixin_42433094/article/details/119137569">https://blog.csdn.net/weixin_42433094/article/details/119137569</a></p></li><li><p>腾讯桌球助手：<a href="https://github.com/CSUFT-Running-Bug/billiard-assistant">https://github.com/CSUFT-Running-Bug/billiard-assistant</a></p></li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> JNI </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 辅助器 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>记录一道面试题</title>
       <link href="/2021/09/24/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
       <url>/2021/09/24/%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
@@ -79,11 +54,11 @@
     
     
     <entry>
-      <title>ffmpeg学习：实现一个简单解码器</title>
-      <link href="/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/"/>
-      <url>/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/</url>
+      <title>ffmpeg学习：window环境搭建</title>
+      <link href="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+      <url>/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
       
-        <content type="html"><![CDATA[<p>​一个简单的解码MP4文件的ffmpeg解码器。</p><span id="more"></span><h2 id="FFmpeg-基本流程图">FFmpeg 基本流程图</h2><p><img src="/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/image-20210907232217743.png" alt="image-20210907232217743"></p><hr><h2 id="FFmpeg-层次结构">FFmpeg 层次结构</h2><p><img src="/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/image-20210907232400006.png" alt="image-20210907232400006"></p><hr><h2 id="简单的解码器实现代码">简单的解码器实现代码</h2><pre><code class="language-c++"></code></pre>]]></content>
+        <content type="html"><![CDATA[<p>​ffmpeg vs2019 环境搭建方法。</p><span id="more"></span><h2 id="将依赖的dll拷贝到工程根目录">将依赖的dll拷贝到工程根目录</h2><pre><code class="language-c">├─ffmpeg_lib_dll  // 此目录存放已经编译好的ffmpeg二进制文件和头文件│  ├─bin│  │  ├─win32 // ffmpeg dll│  │  └─win64│  ├─include // 头文件│  │  ├─libavcodec│  │  ├─libavdevice│  │  ├─libavfilter│  │  ├─libavformat│  │  ├─libavutil│  │  ├─libpostproc│  │  ├─libswresample│  │  └─libswscale│  ├─lib│  │  ├─win32 // ffmpeg lib│  │  └─win64│  └─src│      └─TestFFMpeg│          └─x64│              └─Debug│                  └─TestFFMpeg.tlog└─source    └─helloword // 把ffmpeg dll文件拷贝到此文件夹下        └─Debug            └─helloword.tlog</code></pre><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907004445908.png" alt="image-20210907004445908"></p><hr><h2 id="配置附加目录（C-C-、链接器）">配置附加目录（C/C++、链接器）</h2><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907003555086.png" alt="image-20210907003555086"></p><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907003809294.png" alt="image-20210907003809294"></p><hr><h2 id="FFmpeg-第一个-Hello-Word">FFmpeg 第一个 Hello Word</h2><pre><code class="language-c++">#include &lt;stdio.h&gt;extern "C" {#include &lt;libavcodec/avcodec.h&gt;}#pragma comment(lib, "avcodec.lib")int main(){printf("%s\n", avcodec_configuration());return 0;}</code></pre>]]></content>
       
       
       <categories>
@@ -104,11 +79,11 @@
     
     
     <entry>
-      <title>ffmpeg学习：window环境搭建</title>
-      <link href="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
-      <url>/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+      <title>ffmpeg学习：实现一个简单解码器</title>
+      <link href="/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/"/>
+      <url>/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/</url>
       
-        <content type="html"><![CDATA[<p>​ffmpeg vs2019 环境搭建方法。</p><span id="more"></span><h2 id="将依赖的dll拷贝到工程根目录">将依赖的dll拷贝到工程根目录</h2><pre><code class="language-c">├─ffmpeg_lib_dll  // 此目录存放已经编译好的ffmpeg二进制文件和头文件│  ├─bin│  │  ├─win32 // ffmpeg dll│  │  └─win64│  ├─include // 头文件│  │  ├─libavcodec│  │  ├─libavdevice│  │  ├─libavfilter│  │  ├─libavformat│  │  ├─libavutil│  │  ├─libpostproc│  │  ├─libswresample│  │  └─libswscale│  ├─lib│  │  ├─win32 // ffmpeg lib│  │  └─win64│  └─src│      └─TestFFMpeg│          └─x64│              └─Debug│                  └─TestFFMpeg.tlog└─source    └─helloword // 把ffmpeg dll文件拷贝到此文件夹下        └─Debug            └─helloword.tlog</code></pre><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907004445908.png" alt="image-20210907004445908"></p><hr><h2 id="配置附加目录（C-C-、链接器）">配置附加目录（C/C++、链接器）</h2><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907003555086.png" alt="image-20210907003555086"></p><p><img src="/2021/09/07/ffmpeg%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20210907003809294.png" alt="image-20210907003809294"></p><hr><h2 id="FFmpeg-第一个-Hello-Word">FFmpeg 第一个 Hello Word</h2><pre><code class="language-c++">#include &lt;stdio.h&gt;extern "C" {#include &lt;libavcodec/avcodec.h&gt;}#pragma comment(lib, "avcodec.lib")int main(){printf("%s\n", avcodec_configuration());return 0;}</code></pre>]]></content>
+        <content type="html"><![CDATA[<p>​一个简单的解码MP4文件的ffmpeg解码器。</p><span id="more"></span><h2 id="FFmpeg-基本流程图">FFmpeg 基本流程图</h2><p><img src="/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/image-20210907232217743.png" alt="image-20210907232217743"></p><hr><h2 id="FFmpeg-层次结构">FFmpeg 层次结构</h2><p><img src="/2021/09/07/ffmpeg%E5%AD%A6%E4%B9%A0_MP4/image-20210907232400006.png" alt="image-20210907232400006"></p><hr><h2 id="简单的解码器实现代码">简单的解码器实现代码</h2><pre><code class="language-c++"></code></pre>]]></content>
       
       
       <categories>
