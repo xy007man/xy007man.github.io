@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>如何观测Page Cache</title>
+      <link href="/2024/08/31/%E8%A7%82%E6%B5%8BPage-Cache/"/>
+      <url>/2024/08/31/%E8%A7%82%E6%B5%8BPage-Cache/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、什么是Page-Cache？">一、什么是Page Cache？</h2><p>为了提升对文件的读写效率，Linux 内核会以页大小（4KB）为单位，将文件划分为多数据块。当用户对文件中的某个数据块进行读写操作时，内核首先会申请一个内存页（称为 页缓存）与文件中的数据块进行绑定。如下图所示蓝色的地方就是Page Cache，很明显Page Cache是内核管理的内存，也就是说，它属于内核不属于用户。<br><img src="/2024/08/31/%E8%A7%82%E6%B5%8BPage-Cache/page_cache.png" alt="image-20210907004445908"></p><h2 id="二、如何观测Page-Cache">二、如何观测Page Cache</h2><pre><code class="language-shell">cat /proc/meminforoot@vultr:~# cat /proc/meminfo MemTotal:         979896 kBMemFree:           78116 kBMemAvailable:     451656 kBBuffers:           95416 kBCached:           374544 kBSwapCached:        18972 kBActive:           303408 kBInactive:         324400 kBActive(anon):      51252 kBInactive(anon):   118308 kBActive(file):     252156 kBInactive(file):   206092 kBUnevictable:       27476 kBMlocked:           27476 kBSwapTotal:       2457596 kBSwapFree:        2390652 kBZswap:                 0 kBZswapped:              0 kBDirty:              1764 kBWriteback:             0 kBAnonPages:        181836 kBMapped:            84972 kBShmem:              2808 kBKReclaimable:      71172 kB</code></pre><p>Active(file) + Inactive(file)即文件页，Active(anon)+Inactive(anon)即匿名页均属于Page Cacke</p><h2 id="三、文件页">三、文件页</h2><p>文件页，即与磁盘文件存在映射关系的内存页(有文件背景的页面)，例如进程代码段、文件的映射页等 ,他们有对应的硬盘文件，因此如果要交换，可以直接和硬盘对应的文件进行交换。内存紧张时，非dirty的文件页可以直接drop掉。Active(file) + Inactive(file)是与文件对应的内存页。</p><h2 id="四、匿名页">四、匿名页</h2><p>匿名页，没有文件背景的页面（即没有与磁盘文件存在任何映射关系的内存页面），如stack，heap，数据段，共享内存。SwapCached是打开Swap分区后，把Active(anon)+Inactive(anon)这2项的匿名页交换到磁盘，然后读取到内存后分配的内存。Shmem共享内存是指匿名共享映射的这种方式映射的内存，比如tmpfs（临时文件系统）</p><h2 id="五、为什么需要Page-Cache">五、为什么需要Page Cache</h2><p>减少I/O，提升应用的I/O速度</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>微信小游戏桌球辅助器</title>
       <link href="/2021/10/17/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E6%A1%8C%E7%90%83%E8%BE%85%E5%8A%A9%E5%99%A8/"/>
       <url>/2021/10/17/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E6%A1%8C%E7%90%83%E8%BE%85%E5%8A%A9%E5%99%A8/</url>

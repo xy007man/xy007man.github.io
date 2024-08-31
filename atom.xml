@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-17T08:56:39.129Z</updated>
+  <updated>2024-08-31T13:54:06.815Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何观测Page Cache</title>
+    <link href="http://example.com/2024/08/31/%E8%A7%82%E6%B5%8BPage-Cache/"/>
+    <id>http://example.com/2024/08/31/%E8%A7%82%E6%B5%8BPage-Cache/</id>
+    <published>2024-08-31T13:16:17.000Z</published>
+    <updated>2024-08-31T13:54:06.815Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="一、什么是Page-Cache？">一、什么是Page Cache？</h2><p>为了提升对文件的读写效率，Linux 内核会以页大小（4KB）为单位，将文件划分为多数据块。当用户对文件中的某个数据块进行读写操作时，内核首先会申请一个内存页（称为 页缓存）与文件中的数据块进行绑定。如下图所示蓝色的地方就是Page Cache，很明显Page Cache是内核管理的内存，也就是说，它属于内核不属于用户。<br><img src="/2024/08/31/%E8%A7%82%E6%B5%8BPage-Cache/page_cache.png" alt="image-20210907004445908"></p><h2 id="二、如何观测Page-Cache">二、如何观测Page Cache</h2><pre><code class="language-shell">cat /proc/meminforoot@vultr:~# cat /proc/meminfo MemTotal:         979896 kBMemFree:           78116 kBMemAvailable:     451656 kBBuffers:           95416 kBCached:           374544 kBSwapCached:        18972 kBActive:           303408 kBInactive:         324400 kBActive(anon):      51252 kBInactive(anon):   118308 kBActive(file):     252156 kBInactive(file):   206092 kBUnevictable:       27476 kBMlocked:           27476 kBSwapTotal:       2457596 kBSwapFree:        2390652 kBZswap:                 0 kBZswapped:              0 kBDirty:              1764 kBWriteback:             0 kBAnonPages:        181836 kBMapped:            84972 kBShmem:              2808 kBKReclaimable:      71172 kB</code></pre><p>Active(file) + Inactive(file)即文件页，Active(anon)+Inactive(anon)即匿名页均属于Page Cacke</p><h2 id="三、文件页">三、文件页</h2><p>文件页，即与磁盘文件存在映射关系的内存页(有文件背景的页面)，例如进程代码段、文件的映射页等 ,他们有对应的硬盘文件，因此如果要交换，可以直接和硬盘对应的文件进行交换。内存紧张时，非dirty的文件页可以直接drop掉。Active(file) + Inactive(file)是与文件对应的内存页。</p><h2 id="四、匿名页">四、匿名页</h2><p>匿名页，没有文件背景的页面（即没有与磁盘文件存在任何映射关系的内存页面），如stack，heap，数据段，共享内存。SwapCached是打开Swap分区后，把Active(anon)+Inactive(anon)这2项的匿名页交换到磁盘，然后读取到内存后分配的内存。Shmem共享内存是指匿名共享映射的这种方式映射的内存，比如tmpfs（临时文件系统）</p><h2 id="五、为什么需要Page-Cache">五、为什么需要Page Cache</h2><p>减少I/O，提升应用的I/O速度</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;一、什么是Page-Cache？&quot;&gt;一、什么是Page Cache？&lt;/h2&gt;
+&lt;p&gt;为了提升对文件的读写效率，Linux 内核会以页大小（4KB）为单位，将文件划分为多数据块。当用户对文件中的某个数据块进行读写操作时，内核首先会申请一个内存页（称为 页缓存）与文</summary>
+      
+    
+    
+    
+    
+    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>微信小游戏桌球辅助器</title>
@@ -491,31 +514,6 @@
     
     
     <category term="网络" scheme="http://example.com/tags/%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>字节序/比特序</title>
-    <link href="http://example.com/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/"/>
-    <id>http://example.com/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/</id>
-    <published>2021-07-01T14:52:41.000Z</published>
-    <updated>2021-08-06T14:41:05.695Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="大端序-小端序">大端序/小端序</h2><p>​字节序即字节的存储顺序，如果数据都是单字节的，那怎么存储无所谓了，但是对于多字节数据，比如int，double等，就要考虑存储的顺序了。字节序是硬件层面的东西，通常只和你使用的处理器架构有关，而和编程语言无关。字节序分为大端序和小端序。</p><ul><li><p><strong>大端序</strong>：<strong>将高序字节存储在起始地址</strong>，一个占有4个字节类型的数据0x00112233在内存中如下分布：</p><p><img src="/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/19d498caac5304a2faedd537c5544d87.png" alt="大端模式"></p></li><li><p><strong>小端序</strong>：<strong>将低序字节存储在起始地址</strong>，数据0x00112233在内存中如下分布：</p><p><img src="/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/664881c6233ab0ed63cddc96db08afbc.png" alt="小端模式"></p><hr><h2 id="比特序-位域">比特序/位域</h2><p>​位域的写入顺序和当前系统字节序有关：先定义的位域在大端环境从最高bit位(<code>MSB</code>)开始分配。如果为小端环境则先定义的位域从最低bit位（<code>LSB</code>）开始分配。(CPU操作内存还是以字节为单位的)</p><pre><code class="language-c">struct bitfield{    uint8_t a:1;    uint8_t b:2;    uint8_t c:3;    uint8_t d:2;}bf;bf.a = 1;bf.b = 2;bf.c = 3;bf.d = 3;</code></pre></li><li><p>大端系统：<code>struct bitfield bf</code> 在内存中如下分布：</p><p><img src="/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/5dad1350789a2397a4830e8c4d4d322a.png" alt="MSB"></p></li><li><p>小端系统：<code>struct bitfield bf</code> 在内存中如下分布：</p></li></ul><p><img src="/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/4c5e9f8058a75efa50022165f273e476.png" alt="LSB"></p><p>​比特的发送、接收顺序对CPU、软件都是不可见的，（对诸如PHY的serdes(串行器和解串器)以及网卡写总线的硬件设计是非常重要的）因为我们的网卡会给我们处理这种转换，在发送的时候按照小端序发送比特位，<strong>在接收的时候网卡会把接收到的比特序转换成主机的比特序</strong>，下面是一个小端机器发送一个int整型给一个大端机器的示意图：</p><p>​<img src="/2021/07/01/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%BA%8F%E4%B8%BB%E6%9C%BA%E5%BA%8F/20171222210949014" alt="bit网络发送"></p><p>​因为不同的平台的比特序是不同的，但是我们定义的位域需要根据平台的大小端进行转换，以iphdr为例：</p><pre><code class="language-c">struct iphdr {#if defined(__LITTLE_ENDIAN_BITFIELD)        __u8    ihl:4,                version:4;#elif defined (__BIG_ENDIAN_BITFIELD)        __u8    version:4,                ihl:4;#else#error  "Please fix &lt;asm/byteorder.h&gt;"#endif        __u8    tos;        __u16   tot_len;        __u16   id;        __u16   frag_off;        __u8    ttl;        __u8    protocol;        __u16   check;        __u32   saddr;        __u32   daddr;        /*The options start here. */};</code></pre><hr><h2 id="网络序-主机序">网络序/主机序</h2><ul><li>网络序：采用大端的排序方式</li><li>主机序：不同的CPU有不同的字节序类型这些字节序是指整数在内存中保存的顺序，CPU上运行不同的操作系统，字节序也是不同的</li></ul><table><thead><tr><th>处理器</th><th>操作系统</th><th>字节排序</th></tr></thead><tbody><tr><td>Alpha</td><td>全部</td><td>Little endian</td></tr><tr><td>HP-PA</td><td>NT</td><td>Little endian</td></tr><tr><td>HP-PA</td><td>UNIX</td><td>Big endian</td></tr><tr><td>Intelx86</td><td>全部</td><td>Little endian</td></tr><tr><td>Motorola680x</td><td>全部</td><td>Big endian</td></tr><tr><td>MIPS</td><td>NT</td><td>Little endian</td></tr><tr><td>MIPS</td><td>UNIX</td><td>Big endian</td></tr><tr><td>PowerPC</td><td>NT</td><td>Little endian</td></tr><tr><td>PowerPC</td><td>非NT</td><td>Big endian</td></tr><tr><td>RS/6000</td><td>UNIX</td><td>Big endian</td></tr><tr><td>SPARC</td><td>UNIX</td><td>Big endian</td></tr><tr><td>IXP1200 ARM核心</td><td>全部</td><td>Little endian</td></tr></tbody></table><hr><h2 id="参考链接">参考链接</h2><ul><li><p><a href="https://blog.csdn.net/firefly_2002/article/details/8034046">https://blog.csdn.net/firefly_2002/article/details/8034046</a></p></li><li><p><a href="https://blog.csdn.net/qq_34907757/article/details/117670413">https://blog.csdn.net/qq_34907757/article/details/117670413</a></p></li><li><p><a href="https://blog.csdn.net/godleading/article/details/78876639">https://blog.csdn.net/godleading/article/details/78876639</a></p></li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;大端序-小端序&quot;&gt;大端序/小端序&lt;/h2&gt;
-&lt;p&gt;​	字节序即字节的存储顺序，如果数据都是单字节的，那怎么存储无所谓了，但是对于多字节数据，比如int，double等，就要考虑存储的顺序了。字节序是硬件层面的东西，通常只和你使用的处理器架构有关，而和编程语言无关。</summary>
-      
-    
-    
-    
-    <category term="网络" scheme="http://example.com/categories/%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="字节序" scheme="http://example.com/tags/%E5%AD%97%E8%8A%82%E5%BA%8F/"/>
     
   </entry>
   
